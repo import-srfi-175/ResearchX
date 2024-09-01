@@ -1,11 +1,27 @@
 from fastapi import FastAPI, Depends, Request
 from fastapi.templating import Jinja2Templates
-
-
+from fastapi.middleware.cors import CORSMiddleware
+from routers import auth
+from database import get_db, engine
+import models, schemas
+models.Base.metadata.create_all(bind = engine)
 app = FastAPI()
 
+origins = [
+    "http://localhost:3000",  # React frontend URL
+    "http://localhost:8000",  # Add any other URLs you want to allow
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],  # Allow all HTTP methods (GET, POST, OPTIONS, etc.)
+    allow_headers=["*"],  # Allow all headers
+)
 
 templates = Jinja2Templates(directory='app/templates')
+app.include_router(auth.router)
 
 @app.get('/')
 def root(request: Request):
