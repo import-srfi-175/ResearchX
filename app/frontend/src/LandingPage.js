@@ -1,23 +1,22 @@
-// LandingPage.js
 import React from 'react';
-import { Box, Flex, Heading, Input, Button, Text, Grid, GridItem, Stack} from '@chakra-ui/react';
+import { Box, Flex, Heading, Input, Button, Text, Grid, GridItem, Stack } from '@chakra-ui/react';
 import LandingPageHeader from './LandingPageHeader';
 
 const LandingPage = () => {
   return (
-    <Box p={8}>
+    <Box width="100%" minHeight="100vh" p={0} m={0} boxSizing="border-box">
       <LandingPageHeader />
 
       {/* Hero Section with Search Bar */}
-      <Flex direction="column" align="center" mt={10} mb={16}>
+      <Flex direction="column" align="center" mt={10} mb={16} width="100%">
         <Heading as="h1" size="2xl" mb={4} color="primary.blue">
           Discover, Share, and Advance Research
         </Heading>
-        <Text fontSize="lg" color="accent.darkGray" mb={8} maxWidth="600px" textAlign="center">
+        <Text fontSize="lg" color="accent.darkGray" mb={8} maxWidth="800px" textAlign="center">
           Explore a vast collection of research papers, collaborate with peers, and stay up-to-date with the latest scientific advancements.
         </Text>
-        <Flex width="60%" maxWidth="800px" mb={6}>
-          <Input placeholder="Search for papers, authors, or topics..." size="lg" borderColor="accent.lightGray" />
+        <Flex width="100%" maxWidth="800px" mb={6} align="center">
+          <Input placeholder="Search for papers, authors, or topics..." size="lg" borderColor="accent.lightGray" flex="1" />
           <Button ml={4} size="lg" bg="primary.orange" color="black">
             Search
           </Button>
@@ -25,11 +24,11 @@ const LandingPage = () => {
       </Flex>
 
       {/* Featured Papers Section */}
-      <Box mb={16}>
+      <Box mb={16} width="100%">
         <Heading as="h2" size="xl" mb={4} color="primary.blue" textAlign="center">
           Featured Papers
         </Heading>
-        <Grid templateColumns="repeat(3, 1fr)" gap={8}>
+        <Grid templateColumns="repeat(auto-fit, minmax(200px, 1fr))" gap={8} width="100%">
           {/* Example Featured Paper Cards */}
           {Array.from({ length: 3 }).map((_, index) => (
             <GridItem key={index} bg="white" borderRadius="md" p={6} boxShadow="md">
@@ -48,7 +47,7 @@ const LandingPage = () => {
       </Box>
 
       {/* Recent Submissions Section */}
-      <Box mb={16}>
+      <Box mb={16} width="100%">
         <Heading as="h2" size="xl" mb={4} color="primary.blue" textAlign="center">
           Recent Submissions
         </Heading>
@@ -75,11 +74,11 @@ const LandingPage = () => {
       </Box>
 
       {/* Popular Authors Section */}
-      <Box mb={16}>
+      <Box mb={16} width="100%">
         <Heading as="h2" size="xl" mb={4} color="primary.blue" textAlign="center">
           Popular Authors
         </Heading>
-        <Flex wrap="wrap" justify="center">
+        <Flex wrap="wrap" justify="center" width="100%">
           {/* Example Author Cards */}
           {Array.from({ length: 4 }).map((_, index) => (
             <Box key={index} bg="white" borderRadius="md" p={6} m={4} boxShadow="md" width="200px" textAlign="center">
@@ -95,7 +94,7 @@ const LandingPage = () => {
       </Box>
 
       {/* Call-to-Action Section */}
-      <Box bg="primary.lightBlue" p={8} borderRadius="md" textAlign="center" color="white">
+      <Box bg="primary.lightBlue" p={8} borderRadius="md" textAlign="center" color="white" width="100%">
         <Heading as="h3" size="lg" mb={4}>
           Ready to Share Your Research?
         </Heading>

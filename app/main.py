@@ -1,6 +1,6 @@
-from fastapi import FastAPI, Depends, Request
-from fastapi.templating import Jinja2Templates
-from fastapi.middleware.cors import CORSMiddleware
+from fastapi import FastAPI, Depends, Request # type: ignore
+from fastapi.templating import Jinja2Templates # type: ignore
+from fastapi.middleware.cors import CORSMiddleware # type: ignore
 from routers import auth
 from database import get_db, engine
 import models, schemas

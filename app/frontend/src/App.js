@@ -5,7 +5,6 @@ import SignIn from './SignIn';
 import SignUp from './SignUp';
 import LandingPage from './LandingPage'
 
-// Custom Chakra UI theme
 const theme = extendTheme({
   fonts: {
     heading: 'Inika, serif',
@@ -45,7 +44,7 @@ const App = () => {
               borderWidth={1}
               px={4}
               width="full"
-              maxWidth="500px"
+              maxWidth="1200px"
               borderRadius={8}
               textAlign="center"
               boxShadow="lg"
