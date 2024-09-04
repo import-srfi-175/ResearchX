@@ -1,9 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { ChakraProvider, Box, Flex, extendTheme, Link, Text, IconButton, useColorMode } from '@chakra-ui/react';
+import { ChakraProvider, Box, extendTheme, Link, Text, Flex } from '@chakra-ui/react';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
-import LandingPage from './LandingPage'
+import LandingPage from './LandingPage';
+import MainLayout from './MainLayout';
+import AuthLayout from './AuthLayout';
 
 const theme = extendTheme({
   fonts: {
@@ -16,7 +18,7 @@ const theme = extendTheme({
       lightBlue: '#9DBDFF',
       peach: '#FFD7C4',
       orange: '#FF9874',
-      lighterPeach: '#FEF3E2'
+      lighterPeach: '#FEF3E2',
     },
     accent: {
       lightGray: '#f2f2f2',
@@ -30,40 +32,17 @@ const App = () => {
     <ChakraProvider theme={theme}>
       <Router>
         <Box>
-          <Header /> {/* Add the header here */}
-          <Flex
-            minHeight="100vh"
-            width="full"
-            align="center"
-            justifyContent="center"
-            direction="column"
-            color="white"
-            bgGradient="linear(to-br, primary.blue, primary.orange)" // Add gradient background here
-          >
-            <Box
-              borderWidth={1}
-              px={4}
-              width="full"
-              maxWidth="1200px"
-              borderRadius={8}
-              textAlign="center"
-              boxShadow="lg"
-              bg="white"
-              color="primary.lightBlue"
-            >
-              <ThemeSelector />
-              <Box p={6}>
-                <Routes>
-                  <Route path="/" element={<SignIn />} />
-                  <Route path="/signin" element={<SignIn />} />
-                  <Route path="/signup" element={<SignUp />} />
-                  <Route path="/home" element={<LandingPage />} />
-                  
-                </Routes>
-              </Box>
-            </Box>
-          </Flex>
-          <Footer /> {/* Move the footer outside the box */}
+          <Header />
+          <Routes>
+            {/* Auth Routes */}
+            <Route path="/" element={<AuthLayout><SignIn /></AuthLayout>} />
+            <Route path="/signin" element={<AuthLayout><SignIn /></AuthLayout>} />
+            <Route path="/signup" element={<AuthLayout><SignUp /></AuthLayout>} />
+            
+            {/* Main Routes */}
+            <Route path="/home" element={<MainLayout><LandingPage /></MainLayout>} />
+          </Routes>
+          <Footer />
         </Box>
       </Router>
     </ChakraProvider>
@@ -79,21 +58,6 @@ const Header = () => {
           recon.org
         </Link>
       </Flex>
-    </Box>
-  );
-};
-
-// Theme selector component
-const ThemeSelector = () => {
-  const { colorMode, toggleColorMode } = useColorMode();
-
-  return (
-    <Box textAlign="right" py={4}>
-      <IconButton
-        icon={colorMode === 'light' ? 'moon' : 'sun'}
-        onClick={toggleColorMode}
-        variant="ghost"
-      />
     </Box>
   );
 };
