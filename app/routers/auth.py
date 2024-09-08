@@ -4,6 +4,7 @@ from fastapi.responses import JSONResponse
 import schemas, models
 from database import get_db
 import utils
+import oauth2
 
 router = APIRouter()
 
@@ -22,11 +23,12 @@ async def create_user(user: schemas.NewUser, db: Session  = Depends(get_db)):
 async def login(creds: schemas.Login, db: Session = Depends(get_db)):
     # Check if user exists
     user = db.query(models.User).filter(models.User.email == creds.email).first()
-
+    access_token = oauth2.create_access_token(data={'user_name': user.username,})
+    
     if user:
         # Check if password matches
         if utils.verify(creds.password, user.password):
-            return {"message": "Login successful"}
+            return {"token":access_token}
         else:
             raise HTTPException(status_code=401, detail="Invalid password")
     else:

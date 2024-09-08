@@ -8,7 +8,7 @@ models.Base.metadata.create_all(bind = engine)
 app = FastAPI()
 
 origins = [
-    "http://localhost:3000",  # React frontend URL
+    "http://localhost:5173",  # React frontend URL
     "http://localhost:8000",  # Add any other URLs you want to allow
 ]
 
