@@ -1,7 +1,7 @@
 import React from 'react';
-import Navbar from './Navbar'; // Ensure the path is correct
-import Footer from './Footer'; // You can add the Footer if needed
-import '../styles/AboutUs.css'; // Optional, if you want to style the page
+import Navbar from './Navbar'; 
+import Footer from './Footer'; 
+import '../styles/AboutUs.css'; 
 
 export default function AboutUs() {
   return (
