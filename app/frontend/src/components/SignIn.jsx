@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../styles/SignIn.css'; // Import the CSS file for styling
 
 function SignIn() {
@@ -8,15 +8,49 @@ function SignIn() {
     password: '',
   });
 
+  const [error, setError] = useState(null); // To store any error messages
+  const [loading, setLoading] = useState(false); // To manage loading state
+  const navigate = useNavigate(); // To programmatically navigate
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission logic here
-    console.log('Form submitted:', formData);
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch('http://localhost:8000/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const result = await response.json();
+
+      // Assuming the JWT token is in result.token
+      const { token } = result;
+
+      // Store the JWT token in localStorage
+      localStorage.setItem('authToken', token);
+
+      // Redirect to a different page (e.g., dashboard)
+      navigate('/'); // Update this to the route you want to redirect to
+
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -39,7 +73,10 @@ function SignIn() {
           placeholder="Password"
           required
         />
-        <button type="submit">Sign In</button>
+        <button type="submit" disabled={loading}>
+          {loading ? 'Signing In...' : 'Sign In'}
+        </button>
+        {error && <p className="error-message">{error}</p>}
         <div className="sign-in-footer">
           <p>Don't have an account? <Link to="/signup">Sign Up</Link></p>
           <p>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../styles/SignUp.css'; // Import the CSS file for styling
 
 function SignUp() {
@@ -11,15 +11,49 @@ function SignUp() {
     password: '',
   });
 
+  const [error, setError] = useState(null); // To store any error messages
+  const [loading, setLoading] = useState(false); // To manage loading state
+  const navigate = useNavigate(); // To programmatically navigate
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission logic here
-    console.log('Form submitted:', formData);
+    setLoading(true);
+    setError(null);
+
+    // Combine firstName and lastName into a single name field
+    const { firstName, lastName, ...rest } = formData;
+    const name = `${firstName} ${lastName}`;
+    const dataToSend = { name, ...rest };
+
+    try {
+      const response = await fetch('http://localhost:8000/createuser', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(dataToSend),
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const result = await response.json();
+
+      // Handle successful signup (e.g., redirect user)
+      console.log('Signup successful:', result);
+      navigate('/signin'); // Redirect to the sign-in page or another page as needed
+
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -66,7 +100,10 @@ function SignUp() {
           placeholder="Password"
           required
         />
-        <button type="submit">Sign Up</button>
+        <button type="submit" disabled={loading}>
+          {loading ? 'Signing Up...' : 'Sign Up'}
+        </button>
+        {error && <p className="error-message">{error}</p>}
         <div className="sign-up-footer">
           <p>Already have an account? <Link to="/signin">Sign In</Link></p>
           <p>
