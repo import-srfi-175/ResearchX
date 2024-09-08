@@ -1,0 +1,44 @@
+/* Ensure the footer sticks to the bottom of the page */
+html, body {
+    height: 100%;
+    margin: 0;
+}
+  
+body {
+    display: flex;
+    flex-direction: column;
+}
+  
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px; /* Reduced padding for a thinner footer */
+    background-color: #7B746A;
+    color: #fff;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    font-size: 14px; /* Adjust font size if needed */
+}
+  
+.footer--trademark {
+    flex: 1;
+    padding-left: 20px;
+}
+  
+.footer--links {
+    display: flex;
+    gap: 10px;
+    padding-right: 30px; /* Adjusted padding to fit better */
+}
+  
+.footer--links a {
+    color: #fff;
+    text-decoration: none;
+}
+  
+.footer--links a:hover {
+    text-decoration: underline;
+}

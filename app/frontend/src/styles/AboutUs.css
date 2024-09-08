@@ -1,0 +1,14 @@
+.aboutus-container {
+    max-width: 800px; /* Make the container narrower for a more compact look */
+    margin: 40px auto 0; /* Add top margin to move away from navbar */
+    padding: 20px; /* Add more padding around the content */
+    text-align: left; /* Align text to the left */
+    background-color: #f9f9f9; /* Light background for better readability */
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+    border-radius: 8px; /* Add slight rounding for a smoother look */
+    line-height: 1.5; /* Improve readability with proper line height */
+}
+
+.aboutus-container > h1 {
+    text-align: center;
+}
