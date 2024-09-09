@@ -19,6 +19,9 @@ export default function AboutUs() {
           Whether you're a seasoned researcher or just starting out, our platform provides
           all the tools you need to collaborate and succeed.
         </p>
+        <p>
+          Project by: Yash Kambli, Atharva Jagtap, Prathamesh Khachane, Mohit Kasliwal
+        </p>
       </div>
       <Footer />
     </>
