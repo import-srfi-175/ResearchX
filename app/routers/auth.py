@@ -8,7 +8,7 @@ import oauth2
 
 router = APIRouter()
 
-# Simulate a database for demonstration purposes
+
 @router.post('/createuser', response_class=JSONResponse)
 async def create_user(user: schemas.NewUser, db: Session  = Depends(get_db)):
         
@@ -21,12 +21,10 @@ async def create_user(user: schemas.NewUser, db: Session  = Depends(get_db)):
 
 @router.post('/login', response_class=JSONResponse)
 async def login(creds: schemas.Login, db: Session = Depends(get_db)):
-    # Check if user exists
     user = db.query(models.User).filter(models.User.email == creds.email).first()
     access_token = oauth2.create_access_token(data={'user_name': user.username,})
     
     if user:
-        # Check if password matches
         if utils.verify(creds.password, user.password):
             return {"token":access_token}
         else:
