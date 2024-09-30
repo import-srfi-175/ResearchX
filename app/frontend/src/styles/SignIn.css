@@ -4,6 +4,7 @@
     align-items: center;
     min-height: 100vh;
     background-color: #f4f4f4; /* Light background color for contrast */
+    background: linear-gradient(#e66465, #9198e5);
   }
   
   .sign-in-form {

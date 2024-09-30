@@ -26,11 +26,12 @@
   }
   
   .download-button {
-    background-color: #007bff;
+    background-color: pink;
     color: white;
     padding: 5px 10px;
     border-radius: 4px;
     text-decoration: none;
+
   }
   
   .download-button:hover {
