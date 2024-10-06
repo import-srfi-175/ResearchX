@@ -29,7 +29,7 @@ def verify_access_token(token: str, credentials_exception):
         token_data  = schemas.TokenData(user_name=user_name)
     except JWTError:
         raise credentials_exception
-    print('Verified')
+    # print('Verified')
     return token_data
     
 

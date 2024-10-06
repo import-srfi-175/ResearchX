@@ -13,6 +13,8 @@ from schemas import RecentItem
 from typing import List
 from fastapi.staticfiles import StaticFiles
 from pathlib import Path
+import oauth2
+from routers import paper
 
 # Ensure static directory exists
 os.makedirs("static", exist_ok=True)
@@ -37,7 +39,7 @@ app.add_middleware(
 
 templates = Jinja2Templates(directory='app/templates')
 app.include_router(auth.router)
-
+app.include_router(paper.router)
 # Mount the static files directory
 static_dir = Path(__file__).parent / "static"
 app.mount("/static", StaticFiles(directory=static_dir), name="static")
@@ -53,7 +55,8 @@ async def submit_paper(
     authors: str = Form(...),
     description: str = Form(...),
     document: UploadFile = File(...),
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    user_name = Depends(oauth2.get_current_user)
 ):
     # Save the uploaded file
     document_filename = document.filename
