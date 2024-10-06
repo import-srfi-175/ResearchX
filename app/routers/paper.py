@@ -18,7 +18,7 @@ async def submit_paper(
     description: str = Form(...),
     document: UploadFile = File(...),
     db: Session = Depends(get_db),
-    user_name = Depends(oauth2.get_current_user)
+    # user_name = Depends(oauth2.get_current_user)
 ):
     # Save the uploaded file
     document_filename = document.filename

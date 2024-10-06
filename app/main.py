@@ -14,7 +14,7 @@ from typing import List
 from fastapi.staticfiles import StaticFiles
 from pathlib import Path
 import oauth2
-from routers import paper
+from routers import paper, mashup
 
 # Ensure static directory exists
 os.makedirs("static", exist_ok=True)
@@ -40,6 +40,7 @@ app.add_middleware(
 templates = Jinja2Templates(directory='app/templates')
 app.include_router(auth.router)
 app.include_router(paper.router)
+app.include_router(mashup.router)
 # Mount the static files directory
 static_dir = Path(__file__).parent / "static"
 app.mount("/static", StaticFiles(directory=static_dir), name="static")
@@ -48,38 +49,7 @@ app.mount("/static", StaticFiles(directory=static_dir), name="static")
 def root(request: Request):
     return templates.TemplateResponse('index.html', {"request": request})
 
-@app.post('/submit')
-async def submit_paper(
-    title: str = Form(...),
-    category: str = Form(...),
-    authors: str = Form(...),
-    description: str = Form(...),
-    document: UploadFile = File(...),
-    db: Session = Depends(get_db),
-    user_name = Depends(oauth2.get_current_user)
-):
-    # Save the uploaded file
-    document_filename = document.filename
-    document_path = f"static/{document_filename}"
-    
-    with open(document_path, "wb") as buffer:
-        shutil.copyfileobj(document.file, buffer)
-    
-    # Create a new research paper record
-    try:
-        new_paper = models.ResearchPaper(
-            title=title,
-            category=category,
-            authors=authors,
-            description=description,
-            document_url=f"static/{document_filename}"  # Update URL to reflect static path
-        )
-        db.add(new_paper)
-        db.commit()
-        return {"message": "Research paper submitted successfully!"}
-    except IntegrityError:
-        db.rollback()
-        raise HTTPException(status_code=400, detail="Error in submitting paper")
+
 
 
 @app.get("/recent", response_model=List[schemas.RecentItem])
