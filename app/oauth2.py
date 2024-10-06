@@ -1,6 +1,6 @@
 from jose import JWTError, jwt
 from datetime import  timedelta
-from fastapi import Depends, status, HTTPException
+from fastapi import Depends, status, HTTPException, Request
 from fastapi.security import OAuth2PasswordBearer
 import schemas
 import datetime
@@ -20,20 +20,33 @@ def create_access_token(data: dict):
     return encoded_jwt
 
 def verify_access_token(token: str, credentials_exception):
+
     try:
         payload = jwt.decode(token,SECRET_KEY, algorithms=ALGORITHM )
         user_name:str = payload.get("user_name")
-        print(user_name)
+        user_role:str = payload.get('user_role')
         if user_name is None:
             raise   credentials_exception
-        token_data  = schemas.TokenData(user_name=user_name)
+        token_data  = schemas.TokenData(user_name=user_name, user_role=user_role)
     except JWTError:
         raise credentials_exception
-    # print('Verified')
     return token_data
     
 
-def get_current_user(token: str = Depends(ouath2_scheme)):
-    credentials_exception = HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=f"Could not Validate Credentials", headers={"WWW-Authenticate":"Bearer"})
-    return verify_access_token(token, credentials_exception=credentials_exception)
+def get_current_user(request: Request):
 
+    token = request.cookies.get("jwt_token")
+    if not token:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Not authenticated",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Could not validate credentials",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+
+    return verify_access_token(token, credentials_exception=credentials_exception)
