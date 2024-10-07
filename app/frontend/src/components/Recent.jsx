@@ -39,13 +39,10 @@ export default function Recent() {
               <h2>{paper.title}</h2>
               <p><strong>Category:</strong> {paper.category}</p>
               <p><strong>Authors:</strong> {paper.authors}</p>
-              <p>{paper.description}</p>
+              <p><strong>Abstract:</strong> {paper.description}</p>
               <div className="paper-links">
-                <a href={`http://localhost:8000/${paper.document_url}`} target="_blank" rel="noopener noreferrer">
-                  View Document
-                </a>
                 <a href={`http://localhost:8000/${paper.document_url}`} download className="download-button">
-                  Download PDF
+                  View Paper
                 </a>
               </div>
             </div>
