@@ -1,10 +1,18 @@
-html, body {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    overflow-x: hidden; /* Prevent horizontal scroll */
+body {
+  background: linear-gradient(-45deg, #d1a6c8, #e1a6a1, #a6b1e1, #a6e1d1); /* More vibrant colors */
+  background-size: 400% 400%;
+  animation: gradient 8s ease infinite; /* Faster animation */
+  height: 100vh;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
   }
-
-
-
-
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
