@@ -3,10 +3,22 @@
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: #f4f4f4; /* Light background color for contrast */
-    background: linear-gradient(#e66465, #9198e5);
+     
+    background: linear-gradient(45deg, #ffb3ba, #ffdfba, #ffffba, #baffc9);
+    animation: gradientAnimation 10s infinite;
+    background-size: 600% 600%;
+    @keyframes gradientAnimation {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+    }
   }
-  
+
   .sign-in-form {
     display: flex;
     flex-direction: column;
