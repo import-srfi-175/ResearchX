@@ -5,7 +5,7 @@ import Logo from '../images/arxiv-logo.png';
 import '../styles/Navbar.css';
 
 export default function Navbar() {
-  const { isAuthenticated, logout } = useContext(AuthContext);
+  const { isAuthenticated, userName, logout } = useContext(AuthContext);
 
   return (
     <nav className="navbar">
@@ -20,10 +20,10 @@ export default function Navbar() {
       </ul>
       <div className="navbar--auth">
         {isAuthenticated ? (
-          <>
+          <div className="welcome-message">
+            <span>Welcome, {userName}</span>
             <button onClick={logout} className="button-27">Logout</button>
-            {/* Add additional links or UI components for logged-in users */}
-          </>
+          </div>
         ) : (
           <>
             <Link to="/signin">

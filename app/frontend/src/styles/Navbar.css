@@ -27,8 +27,15 @@
 
 .navbar--auth {
   display: flex;
+  align-items: center; /* Align items vertically */
   gap: 10px;
   padding-right: 40px;
+}
+
+.welcome-message {
+  display: flex;
+  align-items: center; /* Center the username vertically */
+  gap: 25px; /* Space between the username and logout button */
 }
 
 /* CSS */
@@ -41,7 +48,6 @@
   color: #3B3B3B;
   cursor: pointer;
   display: inline-block;
-
   font-size: 14px; /* Reduce font size */
   font-weight: 500;
   line-height: normal;
