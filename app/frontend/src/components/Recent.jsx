@@ -15,7 +15,7 @@ export default function Recent() {
           throw new Error('Network response was not ok');
         }
         const result = await response.json();
-        setPapers(result);
+        setPapers(result.reverse()); // Reverse the array to show new papers on top
       } catch (error) {
         setError(error.message);
       } finally {
