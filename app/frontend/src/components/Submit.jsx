@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { Link } from 'react-router-dom'; // Import Link for navigation
 import Navbar from './Navbar'; // Import Navbar
+import { AuthContext } from '../contexts/AuthContext'; // Import AuthContext
 import '../styles/Submit.css'; // Link to a CSS file for styling
 
 export default function Submit() {
+  const { isAuthenticated } = useContext(AuthContext); // Get authentication status
   const [formData, setFormData] = useState({
     title: '',
     category: '',
@@ -66,44 +69,53 @@ export default function Submit() {
     <>
       <Navbar />
       <div className="submit-container">
-        <h1>Submit Your Research</h1>
-        <p className="submit-subheading">Share your work with the arXiv community.</p>
+        {isAuthenticated ? (
+          <>
+            <h1>Submit Your Research</h1>
+            <p className="submit-subheading">Share your work with the arXiv community.</p>
 
-        <form className="submit-form" onSubmit={handleSubmit}>
-          {/* Title Input */}
-          <label htmlFor="title">Title</label>
-          <input type="text" id="title" name="title" value={formData.title} onChange={handleChange} placeholder="Enter your research title" required />
+            <form className="submit-form" onSubmit={handleSubmit}>
+              <label htmlFor="title">Title</label>
+              <input type="text" id="title" name="title" value={formData.title} onChange={handleChange} placeholder="Enter your research title" required />
 
-          {/* Category Dropdown */}
-          <label htmlFor="category">Category</label>
-          <select id="category" name="category" value={formData.category} onChange={handleChange} required>
-            <option value="">Select a category</option>
-            <option value="computer-science">Computer Science</option>
-            <option value="economics">Economics</option>
-            <option value="electrical-engineering">Electrical Engineering and Systems Science</option>
-            <option value="mathematics">Mathematics</option>
-            <option value="physics">Physics</option>
-            <option value="quantitative-biology">Quantitative Biology</option>
-            <option value="quantitative-finance">Quantitative Finance</option>
-            <option value="statistics">Statistics</option>
-          </select>
+              <label htmlFor="category">Category</label>
+              <select id="category" name="category" value={formData.category} onChange={handleChange} required>
+                <option value="">Select a category</option>
+                <option value="computer-science">Computer Science</option>
+                <option value="economics">Economics</option>
+                <option value="electrical-engineering">Electrical Engineering and Systems Science</option>
+                <option value="mathematics">Mathematics</option>
+                <option value="physics">Physics</option>
+                <option value="quantitative-biology">Quantitative Biology</option>
+                <option value="quantitative-finance">Quantitative Finance</option>
+                <option value="statistics">Statistics</option>
+              </select>
 
-          {/* Authors Input */}
-          <label htmlFor="authors">Authors</label>
-          <input type="text" id="authors" name="authors" value={formData.authors} onChange={handleChange} placeholder="Enter authors' names" required />
+              <label htmlFor="authors">Authors</label>
+              <input type="text" id="authors" name="authors" value={formData.authors} onChange={handleChange} placeholder="Enter authors' names" required />
 
-          {/* Description Box */}
-          <label htmlFor="description">Description</label>
-          <textarea id="description" name="description" value={formData.description} onChange={handleChange} placeholder="Enter a brief description of your research" required></textarea>
+              <label htmlFor="description">Description</label>
+              <textarea id="description" name="description" value={formData.description} onChange={handleChange} placeholder="Enter a brief description of your research" required></textarea>
 
-          {/* Document Upload */}
-          <label htmlFor="document">Document</label>
-          <input type="file" id="document" name="document" accept=".pdf,.doc,.docx" onChange={handleFileChange} required />
+              <label htmlFor="document">Document</label>
+              <input type="file" id="document" name="document" accept=".pdf,.doc,.docx" onChange={handleFileChange} required />
 
-          {/* Submit Button */}
-          <button type="submit" className="submit-button" disabled={loading}>{loading ? 'Submitting...' : 'Submit'}</button>
-          {error && <p className="error-message">{error}</p>}
-        </form>
+              <button type="submit" className="submit-button" disabled={loading}>
+                {loading ? 'Submitting...' : 'Submit'}
+              </button>
+              {error && <p className="error-message">{error}</p>}
+            </form>
+          </>
+        ) : (
+          <div className="auth-required-card">
+            <h2>Submission Requires Authentication</h2>
+            <p>You need to be signed in to submit a research paper. <br></br>Sign up to join arXiv.org today or sign in to continue!</p>
+            <div className="auth-links">
+              <Link to="/signin" className="auth-button">Sign In</Link>
+              <Link to="/signup" className="auth-button">Sign Up</Link>
+            </div>
+          </div>
+        )}
       </div>
     </>
   );
