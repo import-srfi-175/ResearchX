@@ -1,11 +1,12 @@
 from fastapi import FastAPI, Depends, Request, HTTPException, UploadFile, File, Form, APIRouter
 from fastapi.responses import JSONResponse
-import schemas, models, oauth2
+import schemas, models, app.oauth2 as oauth2
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 from typing import List
 import shutil
 from database import get_db
+
 
 router = APIRouter()
 
@@ -17,7 +18,7 @@ async def submit_paper(
     description: str = Form(...),
     document: UploadFile = File(...),
     db: Session = Depends(get_db),
-    current_user: schemas.TokenData = Depends(oauth2.get_current_user)  # Get current user from token
+    user_name = Depends(oauth2.get_current_user)
 ):
     # Save the uploaded file
     document_filename = document.filename

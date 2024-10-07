@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { AuthContext } from '../contexts/AuthContext'; // Import AuthContext
+import { AuthContext } from '../contexts/AuthContext'; 
 import '../styles/SignIn.css';
 
 function SignIn() {
@@ -8,7 +8,7 @@ function SignIn() {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { login } = useContext(AuthContext); // Access login function
+  const { login } = useContext(AuthContext);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -32,13 +32,21 @@ function SignIn() {
       }
 
       const result = await response.json();
+      console.log('Login Result:', result); // Log the result to check token
+
       const { token } = result;
 
-      localStorage.setItem('authToken', token); // Save token to localStorage
-      login(); // Update global auth state
-      navigate('/'); // Redirect to home or dashboard
+      if (token) {
+        localStorage.setItem('authToken', token); // Store token in localStorage
+        login(token); // Assuming login function accepts token for context state
+        console.log('Token stored:', token); // Confirm token storage
+        navigate('/'); 
+      } else {
+        throw new Error('Token is undefined'); // Check if token is undefined
+      }
 
     } catch (error) {
+      console.error('Error during sign in:', error);
       setError(error.message);
     } finally {
       setLoading(false);

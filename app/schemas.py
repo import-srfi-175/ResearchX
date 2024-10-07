@@ -50,7 +50,10 @@ class RecentItem(BaseModel):
     document_url: Optional[str] = None  # Make it optional if not all papers have a URL
     created_at: str  # or datetime if you handle conversion elsewhere
 
-
 class PDF_chat(BaseModel):
     query: str
     pdf_file: str
+    
+class TokenData(BaseModel):
+    user_name: str
+    user_role: str

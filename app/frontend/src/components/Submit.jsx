@@ -8,10 +8,10 @@ export default function Submit() {
     category: '',
     authors: '',
     description: '',
+    document: null,
   });
-  const [document, setDocument] = useState(null);
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -19,7 +19,7 @@ export default function Submit() {
   };
 
   const handleFileChange = (e) => {
-    setDocument(e.target.files[0]);
+    setFormData({ ...formData, document: e.target.files[0] });
   };
 
   const handleSubmit = async (e) => {
@@ -27,17 +27,24 @@ export default function Submit() {
     setLoading(true);
     setError(null);
 
+    const { title, category, authors, description, document } = formData;
+
     const formDataToSend = new FormData();
-    formDataToSend.append('title', formData.title);
-    formDataToSend.append('category', formData.category);
-    formDataToSend.append('authors', formData.authors);
-    formDataToSend.append('description', formData.description);
+    formDataToSend.append('title', title);
+    formDataToSend.append('category', category);
+    formDataToSend.append('authors', authors);
+    formDataToSend.append('description', description);
     formDataToSend.append('document', document);
 
     try {
+      const authToken = localStorage.getItem('authToken'); // Retrieve the token directly from localStorage
+
       const response = await fetch('http://localhost:8000/submit', {
         method: 'POST',
-        body: formDataToSend,
+        headers: {
+          'Authorization': `Bearer ${authToken}`, // Add the JWT token here
+        },
+        body: formDataToSend, // Send FormData directly
       });
 
       if (!response.ok) {
@@ -45,11 +52,11 @@ export default function Submit() {
       }
 
       const result = await response.json();
-      console.log(result);
-      // Handle successful submission (e.g., redirect or display success message)
+      console.log(result.message); // Handle successful submission
 
     } catch (error) {
       setError(error.message);
+      console.error('Error submitting data:', error);
     } finally {
       setLoading(false);
     }
