@@ -81,14 +81,14 @@ export default function Submit() {
               <label htmlFor="category">Category</label>
               <select id="category" name="category" value={formData.category} onChange={handleChange} required>
                 <option value="">Select a category</option>
-                <option value="computer-science">Computer Science</option>
-                <option value="economics">Economics</option>
-                <option value="electrical-engineering">Electrical Engineering and Systems Science</option>
-                <option value="mathematics">Mathematics</option>
-                <option value="physics">Physics</option>
-                <option value="quantitative-biology">Quantitative Biology</option>
-                <option value="quantitative-finance">Quantitative Finance</option>
-                <option value="statistics">Statistics</option>
+                <option value="Physics">Physics</option>
+                <option value="Computer Science">Computer Science</option>
+                <option value="Economics">Economics</option>
+                <option value="Electrical Engineering">Electrical Engineering and Systems Science</option>
+                <option value="Mathematics">Mathematics</option>
+                <option value="Quantitative Biology">Quantitative Biology</option>
+                <option value="Quantitative Finance">Quantitative Finance</option>
+                <option value="Statistics">Statistics</option>
               </select>
 
               <label htmlFor="authors">Authors</label>

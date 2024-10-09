@@ -10,24 +10,33 @@ export default function Browse() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Fetch papers from the API
-  useEffect(() => {
-    const fetchPapers = async () => {
-      try {
-        const response = await fetch('http://localhost:8000/recent');
-        if (!response.ok) {
-          throw new Error('Failed to fetch papers');
-        }
-        const data = await response.json();
-        setPapers(data);
-        setFilteredPapers(data);
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
+  // Function to fetch papers from the API based on search criteria
+  const fetchPapers = async (author = null, title = null, category = null) => {
+    setLoading(true);
+    setError(null);
 
+    try {
+      const query = new URLSearchParams();
+      if (author) query.append('author', author);
+      if (title) query.append('title', title);
+      if (category) query.append('category', category);
+      
+      const response = await fetch(`http://localhost:8000/findpaper?${query.toString()}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch papers');
+      }
+      const data = await response.json();
+      setPapers(data.papers);  // Assuming the response is structured like { "papers": [...] }
+      setFilteredPapers(data.papers);
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Fetch papers on component mount
+  useEffect(() => {
     fetchPapers();
   }, []);
 
@@ -47,6 +56,11 @@ export default function Browse() {
 
     setFilteredPapers(filtered);
   }, [searchQuery, selectedCategory, papers]);
+
+  // Handler for the search button (optional)
+  const handleSearch = () => {
+    fetchPapers(null, searchQuery, selectedCategory); // fetch based on title and category
+  };
 
   if (loading) return <p>Loading papers...</p>;
   if (error) return <p className="error-message">{error}</p>;
@@ -80,6 +94,7 @@ export default function Browse() {
             <option value="Quantitative Finance">Quantitative Finance</option>
             <option value="Statistics">Statistics</option>
           </select>
+          <button onClick={handleSearch}>Search</button> {/* Search button */}
         </div>
 
         {/* Display filtered papers */}

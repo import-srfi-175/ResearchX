@@ -67,27 +67,38 @@ def delete_paper(
     
     return {"message": "Research paper deleted successfully!"}
 
+@router.put('/modifypaper/{id}', response_class=JSONResponse)
+async def modifyer(id: int,modified_paper = schemas.ResearchPaper, db:Session = Depends(get_db)):
+    paper_query = db.query(models.ResearchPaper).filter(models.ResearchPaper.id == id)
+    paper = paper_query.first()
     
-@router.get('findpaper')
+    if paper == None:
+        raise HTTPException(404 , detail = "Paper not found")
+    paper_query.update({**modified_paper.model_dump()}, synchronize_session=False)
+    db.commit()
+    return {"data": "Successfully modified paper"}
+        
+    
+    
+@router.get('/findpaper')
 async def paper_finder(author: Optional[str] = Query(None),
                        title: Optional[str] = Query(None),
                        category: Optional[str] = Query(None),
                        db: Session = Depends(get_db)
                        ):
-    papers = db.query(models.ResearchPaper)
-    if author or title or category:
-        
-        
-        if author:
-            papers = papers.filter(models.ResearchPaper.authors == author)
-        
-        if category:
-            papers = papers.filter(models.ResearchPaper.category == category)
-        
-        if title:
-            papers = papers.filter(models.ResearchPaper.title== title)
-            
-    papers = papers.all()
+    papers_query = db.query(models.ResearchPaper)
+
+    if author:
+        papers_query = papers_query.filter(models.ResearchPaper.authors.ilike(f"%{author}%"))  # Partial match for author
+
+    if category:
+        category = category.lower()
+        papers_query = papers_query.filter(models.ResearchPaper.category.ilike(f"%{category}%"))  # Case-insensitive partial match
+
+    if title:
+        papers_query = papers_query.filter(models.ResearchPaper.title.ilike(f"%{title}%"))  # Partial match for title
+
+    papers = papers_query.all()
     return {"papers": papers}
 
 
