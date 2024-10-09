@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
+import {Link} from 'react-router-dom'
 import '../styles/Browse.css';
 
 export default function Browse() {
@@ -102,7 +103,7 @@ export default function Browse() {
           {filteredPapers.length > 0 ? (
             filteredPapers.map((paper) => (
               <div key={paper.id} className="paper-card">
-                <h2>{paper.title}</h2>
+                <h2><Link to={`/paper/${paper.id}`}>{paper.title}</Link></h2>
                 <p><strong>Category:</strong> {paper.category}</p>
                 <p><strong>Authors:</strong> {paper.authors}</p>
                 <p>{paper.description}</p>
