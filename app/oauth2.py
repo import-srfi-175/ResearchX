@@ -28,7 +28,6 @@ def verify_access_token(token: str, credentials_exception):
         user_name: str = payload.get("user_name")
         user_role: str = payload.get("user_role")
 
-        # Log the decoded payload
         print("Decoded payload:", payload)
 
         if user_name is None or user_role is None:
@@ -37,7 +36,7 @@ def verify_access_token(token: str, credentials_exception):
         token_data = schemas.TokenData(user_name=user_name, user_role=user_role)
         return token_data
     except JWTError as e:
-        print("JWTError:", e)  # Log any JWT errors
+        print("JWTError:", e) 
         raise credentials_exception
 
 
