@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import '../styles/Browse.css';
 
 export default function Browse() {
   const [papers, setPapers] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
-  const [filteredPapers, setFilteredPapers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -20,15 +19,14 @@ export default function Browse() {
       const query = new URLSearchParams();
       if (author) query.append('author', author);
       if (title) query.append('title', title);
-      if (category) query.append('category', category);
-      
+      if (category && category !== '') query.append('category', category); // Add category to the query
+
       const response = await fetch(`http://localhost:8000/findpaper?${query.toString()}`);
       if (!response.ok) {
         throw new Error('Failed to fetch papers');
       }
       const data = await response.json();
       setPapers(data.papers);  // Assuming the response is structured like { "papers": [...] }
-      setFilteredPapers(data.papers);
     } catch (error) {
       setError(error.message);
     } finally {
@@ -36,32 +34,10 @@ export default function Browse() {
     }
   };
 
-  // Fetch papers on component mount
+  // Fetch papers on component mount and when searchQuery or selectedCategory changes
   useEffect(() => {
-    fetchPapers();
-  }, []);
-
-  // Filter papers based on search query and category
-  useEffect(() => {
-    let filtered = papers;
-
-    if (searchQuery) {
-      filtered = filtered.filter((paper) =>
-        paper.title.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-    }
-
-    if (selectedCategory) {
-      filtered = filtered.filter((paper) => paper.category === selectedCategory);
-    }
-
-    setFilteredPapers(filtered);
-  }, [searchQuery, selectedCategory, papers]);
-
-  // Handler for the search button (optional)
-  const handleSearch = () => {
-    fetchPapers(null, searchQuery, selectedCategory); // fetch based on title and category
-  };
+    fetchPapers(null, searchQuery, selectedCategory);
+  }, [searchQuery, selectedCategory]);
 
   if (loading) return <p>Loading papers...</p>;
   if (error) return <p className="error-message">{error}</p>;
@@ -95,15 +71,16 @@ export default function Browse() {
             <option value="Quantitative Finance">Quantitative Finance</option>
             <option value="Statistics">Statistics</option>
           </select>
-          <button onClick={handleSearch}>Search</button> {/* Search button */}
         </div>
 
         {/* Display filtered papers */}
         <div className="papers-list">
-          {filteredPapers.length > 0 ? (
-            filteredPapers.map((paper) => (
+          {papers.length > 0 ? (
+            papers.map((paper) => (
               <div key={paper.id} className="paper-card">
-                <h2><Link to={`/paper/${paper.id}`}>{paper.title}</Link></h2>
+                <h2>
+                  <Link to={`/paper/${paper.id}`}>{paper.title}</Link>
+                </h2>
                 <p><strong>Category:</strong> {paper.category}</p>
                 <p><strong>Authors:</strong> {paper.authors}</p>
                 <p>{paper.description}</p>
