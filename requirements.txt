@@ -1,0 +1,11 @@
+fastapi[all]
+jose
+passlib
+bcrypt
+spacy
+sentence-transformers
+pydantic
+google-generativeai
+sqlalchemy
+psycopg2
+faiss-cpu
