@@ -60,7 +60,7 @@ function SignIn() {
         <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="Email" required />
         <input type="password" name="password" value={formData.password} onChange={handleChange} placeholder="Password" required />
         <button type="submit" disabled={loading}>{loading ? 'Signing In...' : 'Sign In'}</button>
-        {error && <p className="error-message">{error}</p>}
+        {error && <p className="error-message">Failed to signin. Please Check credentials</p>}
         <div className="sign-in-footer">
           <p>Don't have an account? <Link to="/signup">Sign Up</Link></p>
           <p>By signing in, you agree to our <a href="/terms">Terms and Conditions</a> and <a href="/privacy">Privacy Policy</a>.</p>
