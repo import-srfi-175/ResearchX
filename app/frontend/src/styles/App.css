@@ -1,5 +1,5 @@
 body {
-  background: linear-gradient(-45deg, #d1a6c8, #e1a6a1, #a6b1e1, #a6e1d1);
+  background: linear-gradient(-45deg, #000000, #4d4d4d, #999999, #cccccc); /* Dark to light gray */
   background-size: 400% 400%;
   animation: gradient 8s ease infinite;
   display: flex;
@@ -19,14 +19,4 @@ body {
   flex-grow: 1; /* Pushes the footer to the bottom */
 }
 
-@keyframes gradient {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
+

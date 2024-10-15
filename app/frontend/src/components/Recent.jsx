@@ -40,7 +40,7 @@ export default function Recent() {
               <p><strong>Authors:</strong> {paper.authors}</p>
               <p><strong>Abstract:</strong> {paper.description}</p>
               <div className="paper-links">
-                <a href={`http://localhost:8000/${paper.document_url}`} download className="download-button">
+                <a href={`http://localhost:8000/${paper.document_url}`} download className="button-28">
                   View Paper
                 </a>
               </div>

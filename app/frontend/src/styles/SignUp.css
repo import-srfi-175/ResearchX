@@ -2,21 +2,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    background-color: #f4f4f4;
-    background: linear-gradient(45deg, #ffb3ba, #ffdfba, #ffffba, #baffc9);
-    animation: gradientAnimation 10s infinite;
-    background-size: 600% 600%;
-    @keyframes gradientAnimation {
-      0% {
-        background-position: 0% 50%;
-      }
-      50% {
-        background-position: 100% 50%;
-      }
-      100% {
-        background-position: 0% 50%;
-    }
+    min-height: 100vh;   
   }
   
   .sign-up-form {

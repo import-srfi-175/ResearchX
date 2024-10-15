@@ -86,7 +86,7 @@ export default function Browse() {
                   <a
                     href={`http://localhost:8000/${paper.document_url}`}
                     download
-                    className="download-button"
+                    className="button-28"
                   >
                     View Paper
                   </a>

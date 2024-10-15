@@ -110,8 +110,8 @@ export default function Submit() {
             <h2>Submission Requires Authentication</h2>
             <p>You need to be signed in to submit a research paper. <br></br>Sign up to join arXiv.org today or sign in to continue!</p>
             <div className="auth-links">
-              <Link to="/signin" className="auth-button">Sign In</Link>
-              <Link to="/signup" className="auth-button">Sign Up</Link>
+              <Link to="/signin" className="button-27">Sign In</Link>
+              <Link to="/signup" className="button-28">Sign Up</Link>
             </div>
           </div>
         )}
