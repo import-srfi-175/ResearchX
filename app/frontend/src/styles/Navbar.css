@@ -42,14 +42,14 @@
 .button-28, .button-27 {
   appearance: none;
   background-color: transparent;
-  border: 2px solid #1A1A1A;
-  border-radius: 8px; /* Make border-radius smaller */
+  border: 1px solid grey;
+  border-radius: 5px; /* Make border-radius smaller */
   box-sizing: border-box;
   color: #3B3B3B;
   cursor: pointer;
   display: inline-block;
-  font-size: 14px; /* Reduce font size */
-  font-weight: 500;
+  font-size: medium; /* Reduce font size */
+  font-weight: bold;
   line-height: normal;
   margin: 0;
   min-height: 40px; /* Reduce button height */

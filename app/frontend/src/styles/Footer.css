@@ -1,33 +1,37 @@
 .footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    background-color: #7B746A;
-    color: #fff;
-    width: 100%;
-    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
-    font-size: 14px;
-    /* Remove the position absolute */
-  }
-  
-  .footer--trademark {
-    flex: 1;
-    padding-left: 20px;
-  }
-  
-  .footer--links {
-    display: flex;
-    gap: 10px;
-    padding-right: 30px;
-  }
-  
-  .footer--links a {
-    color: #fff;
-    text-decoration: none;
-  }
-  
-  .footer--links a:hover {
-    text-decoration: underline;
-  }
-  
+    display: flex; /* Use flexbox for layout */
+    justify-content: space-between; /* Space between trademark and links */
+    align-items: center; /* Center items vertically */
+    padding: 20px 20px; /* Set padding (adjust values as needed) */
+    background-color: #7B746A; /* Background color */
+    color: #fff; /* Text color */
+    width: 100%; /* Full width */
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Box shadow */
+    font-size: 14px; /* Font size */
+    overflow: hidden; /* Prevent overflow */
+    position: relative; /* Ensures it doesn't overlap with other content */
+}
+
+.footer--trademark {
+    flex: 1; /* Allow this to take available space */
+    margin: 0; /* Remove margin */
+}
+
+.footer--trademark p {
+    margin: 0; /* Remove margin from paragraph to prevent misalignment */
+}
+
+.footer--links {
+    display: flex; /* Use flexbox for links */
+    gap: 15px; /* Increased space between links for more breathing room */
+    margin-right: 40px; /* Add right margin to move links away from the edge */
+}
+
+.footer--links a {
+    color: #fff; /* Link color */
+    text-decoration: none; /* Remove underline */
+}
+
+.footer--links a:hover {
+    text-decoration: underline; /* Underline on hover */
+}

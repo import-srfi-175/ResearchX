@@ -6,6 +6,7 @@ body {
   flex-direction: column;
   min-height: 100vh; /* Ensures that the body covers the whole viewport */
   margin: 0;
+  overflow-x: hidden;
 }
 
 #root {
