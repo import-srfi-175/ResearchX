@@ -28,7 +28,6 @@ export default function Recent() {
 
   return (
     <>
-      <Navbar />
       <div className="recent-container">
         <h1>Recent Research Papers</h1>
         {loading && <p>Loading...</p>}

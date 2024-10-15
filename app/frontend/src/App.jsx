@@ -16,7 +16,6 @@ import './styles/App.css';
 function Home() {
   return (
     <>
-      <Navbar />
       <Hero />
       {/* Add other components or content for Home */}
     </>
@@ -27,19 +26,26 @@ function App() {
   return (
     <AuthProvider>
       <Router>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/browse" element={<Browse />} />
-          <Route path="/recent" element={<Recent />} />
-          <Route path="/submit" element={<Submit />} />
-          <Route path="/aboutus" element={<AboutUs />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/signin" element={<SignIn />} />
-          <Route path="/paper/:id" element={<PaperDetail/>}/>
-        </Routes>
+        <div id="root">
+          <Navbar />
+          <div className="main-content">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/browse" element={<Browse />} />
+              <Route path="/recent" element={<Recent />} />
+              <Route path="/submit" element={<Submit />} />
+              <Route path="/aboutus" element={<AboutUs />} />
+              <Route path="/signup" element={<SignUp />} />
+              <Route path="/signin" element={<SignIn />} />
+              <Route path="/paper/:id" element={<PaperDetail />} />
+            </Routes>
+          </div>
+          <Footer />
+        </div>
       </Router>
     </AuthProvider>
   );
 }
+
 
 export default App;

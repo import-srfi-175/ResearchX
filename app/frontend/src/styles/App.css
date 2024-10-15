@@ -1,8 +1,21 @@
 body {
-  background: linear-gradient(-45deg, #d1a6c8, #e1a6a1, #a6b1e1, #a6e1d1); /* More vibrant colors */
+  background: linear-gradient(-45deg, #d1a6c8, #e1a6a1, #a6b1e1, #a6e1d1);
   background-size: 400% 400%;
-  animation: gradient 8s ease infinite; /* Faster animation */
-  height: 100vh;
+  animation: gradient 8s ease infinite;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Ensures that the body covers the whole viewport */
+  margin: 0;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Makes the root element fill the viewport */
+}
+
+.main-content {
+  flex-grow: 1; /* Pushes the footer to the bottom */
 }
 
 @keyframes gradient {

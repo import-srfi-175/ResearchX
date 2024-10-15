@@ -44,8 +44,6 @@ export default function Browse() {
 
   return (
     <div className="browse-page">
-      <Navbar />
-
       <div className="browse-container">
         <h1>Browse Research Papers</h1>
 

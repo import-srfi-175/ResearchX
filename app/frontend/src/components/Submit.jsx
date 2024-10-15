@@ -67,7 +67,6 @@ export default function Submit() {
 
   return (
     <>
-      <Navbar />
       <div className="submit-container">
         {isAuthenticated ? (
           <>

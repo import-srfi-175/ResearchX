@@ -33,7 +33,6 @@ const PaperDetail = () => {
 
   return (
     <div className="paper-detail-page">
-      <Navbar />
       <div className="paper-detail-container">
         {paper && (
           <div className="paper-detail-card">
