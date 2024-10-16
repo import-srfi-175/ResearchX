@@ -37,11 +37,6 @@ export default function HeroSection() {
             <h3>Easy Submission</h3>
             <p>Streamlined process for submitting and publishing your research papers.</p>
           </div>
-          <div className="feature-item">
-            <Users size={50}/>
-            <h3>Collaboration Tools</h3>
-            <p>Connect with other researchers and collaborate on projects seamlessly.</p>
-          </div>
         </div>
       </div>
       <div className="hero-section white-bg left-aligned margin-imp">
