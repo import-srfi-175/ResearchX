@@ -11,7 +11,6 @@ class Settings(BaseSettings):
     algorithm: str
     gemini_api_key:str
     access_token_expire_minutes: int
-    apyhub_api_key:str
 
     class Config:
         env_file = ".env"
