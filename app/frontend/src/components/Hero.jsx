@@ -90,7 +90,7 @@ export default function HeroSection() {
         </div>
       )}
 
-      <div className="hero-section grey-bg left-aligned margin-imp">
+      <div className="hero-section grey-bg margin-imp">
         <h1>About Project arXiv</h1>
         <p>
           Project arXiv is a community-centric platform designed to make scientific research more accessible and collaborative. Our goal is to provide researchers with powerful tools to publish, discover, and engage with cutting-edge work across various disciplines.

@@ -29,7 +29,7 @@ export default function Recent() {
   return (
     <>
       <div className="recent-container">
-        <h1>Recent Research Papers</h1>
+        <h1>Recently Submitted Research Papers</h1>
         {loading && <p>Loading...</p>}
         {error && <p className="error-message">{error}</p>}
         <div className="papers-list">
