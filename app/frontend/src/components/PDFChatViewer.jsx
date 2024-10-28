@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Document, Page } from 'react-pdf';
 import { AiOutlineSend } from 'react-icons/ai';
 import '../styles/PDFChatViewer.css';
+//Not added in APP till now. If cant find add it
 
 const PDFChatViewer = ({ pdfUrl, chatEndpoint }) => {
   const [numPages, setNumPages] = useState(null);
