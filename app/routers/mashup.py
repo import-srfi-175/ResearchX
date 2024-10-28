@@ -22,6 +22,8 @@ def generation(pdf_chat: schemas.PDF_chat , ):
 
 @router.post('/summarize',response_class=JSONResponse )
 def summarize_pdffile(pdf_chat:schemas.PDF_summarize):
+    pdf_file_name = pdf_chat.pdf_file.split('/')[-1]
+    pdf_chat.pdf_file = pdf_file_name
     current_folder_path = os.path.dirname(os.path.abspath(__file__))
     parent_folder_path = os.path.dirname(current_folder_path)
     uploads_folder_path = os.path.join(parent_folder_path , 'static')
