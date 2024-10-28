@@ -80,7 +80,7 @@ const PaperDetail = () => {
                 View Paper
               </a>
             </div>
-            <button onClick={generateSummary} className="generate-summary-button">
+            <button onClick={generateSummary} className="generate-button">
               Generate Summary
             </button>
             {summary && (
