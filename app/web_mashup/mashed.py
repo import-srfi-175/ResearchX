@@ -1,4 +1,4 @@
-from .mashuputil import RAGPipeline
+# from .mashuputil import RAGPipeline
 from config import settings
 from fastapi import HTTPException
 import google.generativeai as genai
