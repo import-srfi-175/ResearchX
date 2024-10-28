@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Navbar from '../components/Navbar';
 import { Link } from 'react-router-dom';
 import '../styles/Browse.css';
@@ -9,6 +9,8 @@ export default function Browse() {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const searchInputRef = useRef(null); // Ref for the search input
 
   // Function to fetch papers from the API based on search criteria
   const fetchPapers = async (author = null, title = null, category = null) => {
@@ -34,16 +36,27 @@ export default function Browse() {
     }
   };
 
+  // Save selected category to localStorage
   useEffect(() => {
     if (selectedCategory) {
-      localStorage.setItem('lastBrowsedSubject', selectedCategory); // Update the key here
+      localStorage.setItem('lastBrowsedSubject', selectedCategory);
     }
   }, [selectedCategory]);
 
-  // Fetch papers on component mount and when searchQuery or selectedCategory changes
+  // Debounce the search query to prevent frequent API calls
   useEffect(() => {
-    fetchPapers(null, searchQuery, selectedCategory);
+    const delayDebounceFn = setTimeout(() => {
+      fetchPapers(null, searchQuery, selectedCategory);
+    }, 1000); // 1000ms delay
+
+    // Clear timeout if the user starts typing again before the delay completes
+    return () => clearTimeout(delayDebounceFn);
   }, [searchQuery, selectedCategory]);
+
+  // Focus on the search input on component mount
+  useEffect(() => {
+    searchInputRef.current.focus();
+  }, []);
 
   if (loading) return <p>Loading papers...</p>;
   if (error) return <p className="error-message">{error}</p>;
@@ -56,10 +69,11 @@ export default function Browse() {
         {/* Search bar and category selection */}
         <div className="filter-section">
           <input
+            ref={searchInputRef} // Attach the ref to the search input
             type="text"
             placeholder="Search by title"
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={(e) => setSearchQuery(e.target.value)} // Update search query without immediately triggering fetch
           />
           <select
             value={selectedCategory}
@@ -69,10 +83,10 @@ export default function Browse() {
             <option value="Physics">Physics</option>
             <option value="computer-science">Computer Science</option>
             <option value="economics">Economics</option>
-            <option value="electrical-engineering">Electrical Engineering and Systems Science</option>
+            <option value="electrical">Electrical Engineering and Systems Science</option>
             <option value="mathematics">Mathematics</option>
-            <option value="quantitative-biology">Quantitative Biology</option>
-            <option value="quantitative-finance">Quantitative Finance</option>
+            <option value="biology">Quantitative Biology</option>
+            <option value="finance">Quantitative Finance</option>
             <option value="statistics">Statistics</option>
           </select>
         </div>

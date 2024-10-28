@@ -1,11 +1,11 @@
 import React, { useState, useContext } from 'react';
-import { Link } from 'react-router-dom'; // Import Link for navigation
-import Navbar from './Navbar'; // Import Navbar
-import { AuthContext } from '../contexts/AuthContext'; // Import AuthContext
-import '../styles/Submit.css'; // Link to a CSS file for styling
+import { Link } from 'react-router-dom';
+import Navbar from './Navbar';
+import { AuthContext } from '../contexts/AuthContext';
+import '../styles/Submit.css';
 
 export default function Submit() {
-  const { isAuthenticated } = useContext(AuthContext); // Get authentication status
+  const { isAuthenticated } = useContext(AuthContext);
   const [formData, setFormData] = useState({
     title: '',
     category: '',
@@ -15,6 +15,7 @@ export default function Submit() {
   });
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false); // Success state
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -29,9 +30,9 @@ export default function Submit() {
     e.preventDefault();
     setLoading(true);
     setError(null);
+    setSuccess(false); // Reset success message on new submission
 
     const { title, category, authors, description, document } = formData;
-
     const formDataToSend = new FormData();
     formDataToSend.append('title', title);
     formDataToSend.append('category', category);
@@ -40,14 +41,14 @@ export default function Submit() {
     formDataToSend.append('document', document);
 
     try {
-      const authToken = localStorage.getItem('authToken'); // Retrieve the token directly from localStorage
+      const authToken = localStorage.getItem('authToken');
 
       const response = await fetch('http://localhost:8000/submit', {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${authToken}`, // Add the JWT token here
+          'Authorization': `Bearer ${authToken}`,
         },
-        body: formDataToSend, // Send FormData directly
+        body: formDataToSend,
       });
 
       if (!response.ok) {
@@ -55,7 +56,16 @@ export default function Submit() {
       }
 
       const result = await response.json();
-      console.log(result.message); // Handle successful submission
+      console.log(result.message);
+
+      setSuccess(true); // Set success to true on successful submission
+      setFormData({ // Reset form fields
+        title: '',
+        category: '',
+        authors: '',
+        description: '',
+        document: null,
+      });
 
     } catch (error) {
       setError(error.message);
@@ -75,10 +85,24 @@ export default function Submit() {
 
             <form className="submit-form" onSubmit={handleSubmit}>
               <label htmlFor="title">Title</label>
-              <input type="text" id="title" name="title" value={formData.title} onChange={handleChange} placeholder="Enter your research title" required />
+              <input
+                type="text"
+                id="title"
+                name="title"
+                value={formData.title}
+                onChange={handleChange}
+                placeholder="Enter your research title"
+                required
+              />
 
               <label htmlFor="category">Category</label>
-              <select id="category" name="category" value={formData.category} onChange={handleChange} required>
+              <select
+                id="category"
+                name="category"
+                value={formData.category}
+                onChange={handleChange}
+                required
+              >
                 <option value="">Select a category</option>
                 <option value="Physics">Physics</option>
                 <option value="Computer Science">Computer Science</option>
@@ -91,18 +115,41 @@ export default function Submit() {
               </select>
 
               <label htmlFor="authors">Authors</label>
-              <input type="text" id="authors" name="authors" value={formData.authors} onChange={handleChange} placeholder="Enter authors' names" required />
+              <input
+                type="text"
+                id="authors"
+                name="authors"
+                value={formData.authors}
+                onChange={handleChange}
+                placeholder="Enter authors' names"
+                required
+              />
 
               <label htmlFor="description">Description</label>
-              <textarea id="description" name="description" value={formData.description} onChange={handleChange} placeholder="Enter a brief description of your research" required></textarea>
+              <textarea
+                id="description"
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+                placeholder="Enter a brief description of your research"
+                required
+              ></textarea>
 
               <label htmlFor="document">Document</label>
-              <input type="file" id="document" name="document" accept=".pdf,.doc,.docx" onChange={handleFileChange} required />
+              <input
+                type="file"
+                id="document"
+                name="document"
+                accept=".pdf,.doc,.docx"
+                onChange={handleFileChange}
+                required
+              />
 
               <button type="submit" className="submit-button" disabled={loading}>
                 {loading ? 'Submitting...' : 'Submit'}
               </button>
               {error && <p className="error-message">{error}</p>}
+              {success && <p className="success-message">Submission successful!</p>} {/* Success message */}
             </form>
           </>
         ) : (

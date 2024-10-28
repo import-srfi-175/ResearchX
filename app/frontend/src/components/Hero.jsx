@@ -18,9 +18,9 @@ export default function HeroSection() {
     "physics": "Physics",
     "computer-science": "Computer Science",
     "economics": "Economics",
-    "electrical-engineering": "Electrical Engineering and Systems Science",
+    "electrical": "Electrical Engineering and Systems Science",
     "mathematics": "Mathematics",
-    "quantitative-biology": "Quantitative Biology",
+    "biology": "Quantitative Biology",
     "quantitative-finance": "Quantitative Finance",
     "statistics": "Statistics"
   };
