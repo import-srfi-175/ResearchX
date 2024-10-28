@@ -19,20 +19,26 @@ export default function Browse() {
       const query = new URLSearchParams();
       if (author) query.append('author', author);
       if (title) query.append('title', title);
-      if (category && category !== '') query.append('category', category); // Add category to the query
+      if (category && category !== '') query.append('category', category);
 
       const response = await fetch(`http://localhost:8000/findpaper?${query.toString()}`);
       if (!response.ok) {
         throw new Error('Failed to fetch papers');
       }
       const data = await response.json();
-      setPapers(data.papers);  // Assuming the response is structured like { "papers": [...] }
+      setPapers(data.papers);
     } catch (error) {
       setError(error.message);
     } finally {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (selectedCategory) {
+      localStorage.setItem('lastBrowsedSubject', selectedCategory); // Update the key here
+    }
+  }, [selectedCategory]);
 
   // Fetch papers on component mount and when searchQuery or selectedCategory changes
   useEffect(() => {
@@ -61,13 +67,13 @@ export default function Browse() {
           >
             <option value="">All Categories</option>
             <option value="Physics">Physics</option>
-            <option value="Computer Science">Computer Science</option>
-            <option value="Economics">Economics</option>
-            <option value="Electrical Engineering">Electrical Engineering and Systems Science</option>
-            <option value="Mathematics">Mathematics</option>
-            <option value="Quantitative Biology">Quantitative Biology</option>
-            <option value="Quantitative Finance">Quantitative Finance</option>
-            <option value="Statistics">Statistics</option>
+            <option value="computer-science">Computer Science</option>
+            <option value="economics">Economics</option>
+            <option value="electrical-engineering">Electrical Engineering and Systems Science</option>
+            <option value="mathematics">Mathematics</option>
+            <option value="quantitative-biology">Quantitative Biology</option>
+            <option value="quantitative-finance">Quantitative Finance</option>
+            <option value="statistics">Statistics</option>
           </select>
         </div>
 
@@ -86,7 +92,7 @@ export default function Browse() {
                   <a
                     href={`http://localhost:8000/${paper.document_url}`}
                     download
-                    className="button-28"
+                    className="download-button"
                   >
                     View Paper
                   </a>

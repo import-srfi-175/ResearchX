@@ -1,47 +1,50 @@
+/* General Section Styles */
 .hero-section {
-    padding: 20px 15%; /* Add left and right padding for content */
+    padding: 20px 15%;
     text-align: center;
 }
 
 .grey-bg {
-    background-color: #f0f0f0; /* Grey background color */
+    background-color: #f0f0f0;
 }
 
 .white-bg {
-    background-color: #ffffff; /* White background color */
+    background-color: #ffffff;
 }
 
 .margin-imp {
-    margin: 0; /* No margin for the section itself */
+    margin: 0;
 }
 
 .left-aligned {
     text-align: left;
 }
 
+/* Feature Section */
 .features {
     display: flex;
-    justify-content: space-around; /* Distribute space evenly between features */
+    justify-content: space-around;
     margin-top: 20px;
 }
 
 .feature-item {
     margin-top: 15px;
-    text-align: center; /* Center align content within the feature item */
+    text-align: center;
 }
 
 .feature-item h3 {
-    font-weight: bold; /* Make feature title bold */
-    margin-top: 10px; /* Add spacing above the title */
+    font-weight: bold;
+    margin-top: 10px;
 }
 
 .feature-item p {
-    margin-top: 5px; /* Space between title and description */
+    margin-top: 5px;
 }
 
+/* Team Members Section */
 .team-members {
     display: flex;
-    justify-content: space-around; /* Distribute space evenly between team members */
+    justify-content: space-around;
     margin-top: 20px;
 }
 
@@ -50,11 +53,94 @@
 }
 
 .team-member img {
-    width: 80px; /* Adjust size as needed */
-    height: 80px; /* Adjust size as needed */
-    border-radius: 50%; /* Make images circular */
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
     margin-bottom: 10px;
 }
+
+/* Carousel Section */
+.carousel-section {
+    padding: 20px 10%;
+    background-color: #ffffff;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.carousel-section h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+/* Carousel Layout */
+.carousel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 0;
+}
+
+.carousel-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Ensures content and controls are spaced */
+    align-items: flex-start;
+    max-width: 80%;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    margin: 0 10px;
+    text-align: left;
+    min-height: 300px; /* Optional: Set minimum height if needed */
+}
+
+.carousel-card h3 {
+    font-size: 18px;
+    color: black;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.carousel-card p {
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.carousel-card a {
+    color: black;
+    text-decoration: none;
+}
+
+.carousel-card a:visited {
+    color: black;
+}
+
+/* Centered Arrow Styles Below the Card */
+.carousel-controls {
+    display: flex;
+    justify-content: center; /* Center the arrows horizontally */
+    margin-top: 10px; /* Spacing above arrows */
+    padding-top: 15px; /* Optional: add spacing above controls */
+}
+
+.carousel-arrow {
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    margin: 0 10px; /* Space between arrows */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+}
+
 
 /* Button Styles */
 .btn-get-started {
@@ -64,16 +150,9 @@
     font-size: medium;
     padding: 12.5px 20px;
     border: none;
-    border-radius: 5px; /* Rounded edges */
+    border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s;
-    margin-right: 10px; /* Add gap between buttons */
-}
-
-.btn-get-started:hover {
-    background-color: #333; /* Darker shade on hover */
-    
-    box-shadow: rgba(0, 0, 0, 0.25) 0 5px 10px;
+    margin-right: 10px;
 }
 
 .btn-learn-more {
@@ -82,16 +161,14 @@
     font-weight: bold;
     font-size: medium;
     padding: 12.5px 20px;
-    border: 1px solid grey; /* Thin grey outline */
-    border-radius: 5px; /* Rounded edges */
+    border: 1px solid grey;
+    border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s;
 }
 
-.btn-learn-more:hover {
-    background-color: #f0f0f0; /* Light grey background on hover */
-    
-    box-shadow: rgba(0, 0, 0, 0.25) 0 5px 10px;
+/* Hero.css */
+.carousel-arrow.disabled {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
 }
-
-
