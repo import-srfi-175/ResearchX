@@ -1,6 +1,14 @@
 from .mashuputil import RAGPipeline
 from config import settings
+from fastapi import HTTPException
 import google.generativeai as genai
+import requests
+import PyPDF2
+import logging
+
+# Set up logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 rag_pipeline = RAGPipeline()
 genai.configure(api_key=settings.gemini_api_key)
 model = genai.GenerativeModel("gemini-1.5-flash")
@@ -21,5 +29,71 @@ def respond(query, pdf_file: str):
     
     response = model.generate_content(prompt)
     return response
+
+def extract_text_from_pdf(pdf_path):
+    with open(pdf_path, 'rb') as pdf_file:
+        pdf_reader = PyPDF2.PdfReader(pdf_file)
+        extracted_text = ""
+        for page in pdf_reader.pages:
+            text = page.extract_text()
+            if text:
+                extracted_text += text
+        return extracted_text
+  
+def summarize(pdf_file:str):
+    extracted_text = extract_text_from_pdf(pdf_path=pdf_file)
+    prompt = "Summarize the text given text"
+    response = model.generate_content([prompt, extracted_text])
+    return response.text
     
+  
+  
+# def summarize(pdf_file: str):
+#     headers = {
+#         'apy-token': settings.apyhub_api_key,  # Ensure this API key is correct
+#     }
+
+#     try:
+#         # Open the file safely using 'with'
+#         with open(pdf_file, 'rb') as file:
+#             files = {
+#                 'file': file,
+#             }
+
+#             # Make the API request
+#             logger.info("Sending request to APYHub API...")
+#             response = requests.post(
+#                 'https://api.apyhub.com/ai/summarize-documents/file',
+#                 headers=headers,
+#                 files=files
+#             )
+
+#         # Check if the response is not 200
+#         if response.status_code != 200:
+#             logger.error(f"Error from APYHub API: {response.status_code} - {response.text}")
+#             raise HTTPException(
+#                 status_code=response.status_code,
+#                 detail=f"Error from APYHub API: {response.text}"
+#             )
+
+#         # If successful, return the JSON response
+#         return response.json()
+
+#     except FileNotFoundError:
+#         raise HTTPException(
+#             status_code=404,
+#             detail=f"File '{pdf_file}' not found."
+#         )
+
+#     except requests.RequestException as e:
+#         raise HTTPException(
+#             status_code=500,
+#             detail=f"Error occurred during API request: {str(e)}"
+#         )
+
+#     except Exception as e:
+#         raise HTTPException(
+#             status_code=500,
+#             detail=f"An unexpected error occurred: {str(e)}"
+#         )
 

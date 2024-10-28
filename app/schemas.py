@@ -57,3 +57,5 @@ class PDF_chat(BaseModel):
 class TokenData(BaseModel):
     user_name: str
     user_role: str
+class PDF_summarize(BaseModel):
+    pdf_file:str
