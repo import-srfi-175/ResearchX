@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-
 import { Link } from 'react-router-dom';
 import '../styles/Recent.css';
 
@@ -37,7 +36,7 @@ export default function Recent() {
           {papers.map(paper => (
             <div key={paper.id} className="paper-item">
               <h2>
-                <Link to={`/paper/${paper.id}`}>{paper.title}</Link>
+                <Link to={`/paper/${paper.id}`} className="paper-link">{paper.title}</Link> {/* Add className here */}
               </h2>
               <p><strong>Category:</strong> {paper.category}</p>
               <p><strong>Authors:</strong> {paper.authors}</p>

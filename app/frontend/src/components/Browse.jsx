@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import { Link } from 'react-router-dom';
 import '../styles/Browse.css';
@@ -9,8 +9,6 @@ export default function Browse() {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
-  const searchInputRef = useRef(null); // Ref for the search input
 
   // Function to fetch papers from the API based on search criteria
   const fetchPapers = async (author = null, title = null, category = null) => {
@@ -47,16 +45,11 @@ export default function Browse() {
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
       fetchPapers(null, searchQuery, selectedCategory);
-    }, 1000); // 1000ms delay
+    }, 500); // 500ms delay
 
     // Clear timeout if the user starts typing again before the delay completes
     return () => clearTimeout(delayDebounceFn);
   }, [searchQuery, selectedCategory]);
-
-  // Focus on the search input on component mount
-  useEffect(() => {
-    searchInputRef.current.focus();
-  }, []);
 
   if (loading) return <p>Loading papers...</p>;
   if (error) return <p className="error-message">{error}</p>;
@@ -69,7 +62,6 @@ export default function Browse() {
         {/* Search bar and category selection */}
         <div className="filter-section">
           <input
-            ref={searchInputRef} // Attach the ref to the search input
             type="text"
             placeholder="Search by title"
             value={searchQuery}
