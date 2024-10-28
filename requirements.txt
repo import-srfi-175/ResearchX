@@ -9,3 +9,4 @@ google-generativeai
 sqlalchemy
 psycopg2
 faiss-cpu
+pypdf2
