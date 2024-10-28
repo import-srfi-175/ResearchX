@@ -7,6 +7,7 @@ import Recent from './components/Recent';
 import Submit from './components/Submit';
 import AboutUs from './components/AboutUs';
 import PaperDetail from './components/PaperDetail';
+import BrowseArxiv from './components/SearchNet';
 import Footer from './components/Footer';
 import Hero from './components/Hero';
 import { AuthProvider } from './contexts/AuthContext'; // Import AuthProvider
@@ -37,6 +38,7 @@ function App() {
               <Route path="/aboutus" element={<AboutUs />} />
               <Route path="/signup" element={<SignUp />} />
               <Route path="/signin" element={<SignIn />} />
+              <Route path="/fetchnet" element={<BrowseArxiv/> }/>
               <Route path="/paper/:id" element={<PaperDetail />} />
             </Routes>
           </div>

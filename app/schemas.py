@@ -59,3 +59,6 @@ class TokenData(BaseModel):
     user_role: str
 class PDF_summarize(BaseModel):
     pdf_file:str
+    
+class Fetch(BaseModel):
+    query: str

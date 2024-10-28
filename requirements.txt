@@ -10,3 +10,5 @@ sqlalchemy
 psycopg2
 faiss-cpu
 pypdf2
+beautifulsoup4
+lxml

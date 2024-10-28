@@ -18,7 +18,7 @@ def generation(pdf_chat: schemas.PDF_chat , ):
     uploads_folder_path = os.path.join(parent_folder_path , 'static')
     pdf_file_path = os.path.join(uploads_folder_path, pdf_chat.pdf_file)
     response = mashed.respond(query=pdf_chat.query , pdf_file=pdf_file_path)
-    return {'reponse': response.text}
+    return {'reponse': response}
 
 @router.post('/summarize',response_class=JSONResponse )
 def summarize_pdffile(pdf_chat:schemas.PDF_summarize):

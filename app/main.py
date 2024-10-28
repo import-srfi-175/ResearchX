@@ -14,7 +14,7 @@ from typing import List
 from fastapi.staticfiles import StaticFiles
 from pathlib import Path
 import oauth2
-from routers import paper, mashup
+from routers import paper, mashup, scraping_router
 
 # Ensure static directory exists
 os.makedirs("static", exist_ok=True)
@@ -41,6 +41,7 @@ templates = Jinja2Templates(directory='app/templates')
 app.include_router(auth.router)
 app.include_router(paper.router)
 app.include_router(mashup.router)
+app.include_router(scraping_router.router)
 # Mount the static files directory
 static_dir = Path(__file__).parent / "static"
 app.mount("/static", StaticFiles(directory=static_dir), name="static")
