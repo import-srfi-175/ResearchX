@@ -49,19 +49,17 @@ def delete_paper(
     db: Session = Depends(get_db), 
     current_user: schemas.TokenData = Depends(oauth2.get_current_user)
 ):
-    # Find the research paper by its ID
     paper = db.query(models.ResearchPaper).filter(models.ResearchPaper.id == paper_id).first()
     
-    # If the paper does not exist, raise a 404 error
     if not paper:
         raise HTTPException(404, detail="Paper not found")
-
+    
+    print(f"Current user: {current_user.user_name}, Paper author: {paper.authors}")  # log  for debugging
     # Try to delete the associated file from the filesystem
     document_path = paper.document_url
     if os.path.exists(document_path):
         os.remove(document_path)  # Delete the file from the filesystem
     
-
     db.delete(paper)
     db.commit()
     
@@ -78,8 +76,6 @@ async def modifyer(id: int,modified_paper = schemas.ResearchPaper, db:Session = 
     db.commit()
     return {"data": "Successfully modified paper"}
         
-    
-    
 @router.get('/findpaper')
 async def paper_finder(author: Optional[str] = Query(None),
                        title: Optional[str] = Query(None),
