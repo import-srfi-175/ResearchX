@@ -14,6 +14,7 @@ import UpdatePaper from './components/UpdatePaper';
 import { AuthProvider } from './contexts/AuthContext'; // Import AuthProvider
 
 import './styles/App.css';
+import PDFChat from './components/PDFChat';
 
 
 function Home() {
@@ -43,6 +44,7 @@ function App() {
               <Route path="/fetchnet" element={<BrowseArxiv/> }/>
               <Route path="/paper/:id" element={<PaperDetail />} />
               <Route path="/update-paper/:id" element={<UpdatePaper />} />
+              <Route path="/pdfchat" element={<PDFChat />} />
             </Routes>
           </div>
           <Footer />

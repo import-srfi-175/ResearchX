@@ -138,6 +138,10 @@ const PaperDetail = () => {
                 <ReactMarkdown>{summary}</ReactMarkdown>
               </div>
             )}
+            <p className="help-text">
+              Need help understanding this stuff? 
+              <a href={`/pdfchat?pdfUrl=http://localhost:8000/${paper.document_url}`}> Ask questions here!</a>
+            </p>
           </div>
         )}
       </div>
