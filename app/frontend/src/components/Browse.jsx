@@ -12,7 +12,7 @@ export default function Browse() {
 
   // Function to fetch papers from the API based on search criteria
   const fetchPapers = async (author = null, title = null, category = null) => {
-    setLoading(true);
+    setLoading(true);  
     setError(null);
 
     try {

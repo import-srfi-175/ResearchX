@@ -13,8 +13,7 @@ const PaperDetail = () => {
   const [paper, setPaper] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [summary, setSummary] = useState(''); // State for the summary
-  const [loadingSummary, setLoadingSummary] = useState(false); // State for loading animation
+  const [summary, setSummary] = useState('');
 
   useEffect(() => {
     const fetchPaper = async () => {
@@ -60,9 +59,6 @@ const PaperDetail = () => {
       return;
     }
 
-    setLoadingSummary(true); // Show loading animation
-    setSummary(''); // Clear previous summary if any
-
     try {
       const response = await fetch('http://localhost:8000/summarize', {
         method: 'POST',
@@ -82,8 +78,6 @@ const PaperDetail = () => {
       setSummary(data.response);
     } catch (error) {
       setError(error.message);
-    } finally {
-      setLoadingSummary(false); // Hide loading animation
     }
   };
 
@@ -117,18 +111,11 @@ const PaperDetail = () => {
             <button onClick={generateSummary} className="generate-button">
               Generate Summary
             </button>
-            {loadingSummary ? (
-              <div className="loading-animation">
-                <p>Generating Summary...</p>
-                <div className="spinner"></div>
+            {summary && (
+              <div className="summary-container">
+                <h2>Summary</h2>
+                <ReactMarkdown>{summary}</ReactMarkdown>
               </div>
-            ) : (
-              summary && (
-                <div className="summary-container">
-                  <h2>Summary</h2>
-                  <ReactMarkdown>{summary}</ReactMarkdown> {/* Render Markdown content */}
-                </div>
-              )
             )}
           </div>
         )}
