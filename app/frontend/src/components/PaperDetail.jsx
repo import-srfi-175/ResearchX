@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import '../styles/PaperDetail.css';
 import { AuthContext } from '../contexts/AuthContext';
-import { Trash, Edit } from 'lucide-react';
+import { Trash, Edit, FileText, Sparkles, Loader2 } from 'lucide-react';
 
 const PaperDetail = () => {
   const { id } = useParams();
@@ -13,6 +13,7 @@ const PaperDetail = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [summary, setSummary] = useState('');
+  const [isGenerating, setIsGenerating] = useState(false); 
 
   useEffect(() => {
     const fetchPaper = async () => {
@@ -63,6 +64,7 @@ const PaperDetail = () => {
       return;
     }
 
+    setIsGenerating(true); // Set loader state to true
     try {
       const response = await fetch('http://localhost:8000/summarize', {
         method: 'POST',
@@ -82,6 +84,8 @@ const PaperDetail = () => {
       setSummary(data.response);
     } catch (error) {
       setError(error.message);
+    } finally {
+      setIsGenerating(false); // Reset loader state
     }
   };
 
@@ -103,27 +107,31 @@ const PaperDetail = () => {
             <p><strong>Description:</strong> {paper.description}</p>
             <p><strong>Submitted on:</strong> {new Date(paper.created_at).toLocaleDateString()}</p>
             <div className="paper-links">
-              <a
-                href={`http://localhost:8000/${paper.document_url}`}
-                download
-                className="download-button"
-              >
-                View Paper
-              </a>
+              <div className="left-buttons">
+                <a
+                  href={`http://localhost:8000/${paper.document_url}`}
+                  download
+                  className="button-28"
+                >
+                  <FileText size={16} /> View Paper
+                </a>
+                {isAuthenticated && (
+                  <>
+                    <button onClick={handleUpdate} className="button-27">
+                      <Edit size={16} /> Update
+                    </button>
+                    <button onClick={handleDelete} className="button-27">
+                      <Trash size={16} /> Delete
+                    </button>
+                  </>
+                )}
+              </div>
               {isAuthenticated && (
-                <>
-                  <button onClick={handleUpdate} className="update-button">
-                    <Edit size={16} /> Update
-                  </button>
-                  <button onClick={handleDelete} className="delete-button">
-                    <Trash size={16} /> Delete
-                  </button>
-                </>
+                <button onClick={generateSummary} className="button-28">
+                  {isGenerating ? <Loader2 size={16} className="loader" /> : <Sparkles size={16} />} Generate Summary
+                </button>
               )}
             </div>
-            <button onClick={generateSummary} className="generate-button">
-              Generate Summary
-            </button>
             {summary && (
               <div className="summary-container">
                 <h2>Summary</h2>

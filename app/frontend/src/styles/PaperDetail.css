@@ -27,28 +27,12 @@
   margin: 10px 0;
   font-size: 16px;
 }
-
-.paper-detail-card strong {
-  color: #007bff;
-}
-
+ 
 .paper-links {
   margin-top: 20px;
   text-align: left;
   display: flex;
   justify-content: space-between;
-}
-
-.download-button {
-  background-color: pink;
-  color: white;
-  padding: 5px 10px;
-  border-radius: 4px;
-  text-decoration: none;
-}
-
-.download-button:hover {
-  background-color: #0056b3;
 }
 
 .error-message {
@@ -74,33 +58,71 @@
   margin-top: 20px;
 }
 
-.delete-button {
-  background-color: red;
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 4px;
+.button-28, .button-27 {
+  appearance: none;
+  background-color: transparent;
+  border: 1px solid grey;
+  border-radius: 5px; /* Make border-radius smaller */
+  box-sizing: border-box;
+  color: #3B3B3B;
   cursor: pointer;
+  display: inline-block;
+  font-size: medium; /* Reduce font size */
+  font-weight: bold;
+  line-height: normal;
+  margin: 0;
+  min-height: 40px; /* Reduce button height */
+  padding: 8px 16px; /* Reduce padding */
+  text-align: center;
+  text-decoration: none;
+  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: auto; /* Set width to auto */
+  will-change: transform;
 }
 
-.delete-button:hover {
-  background-color: darkred;
+.button-28:hover, .button-27:hover {
+  color: #fff;
+  background-color: #1A1A1A;
+  box-shadow: rgba(0, 0, 0, 0.25) 0 5px 10px;
+  transform: translateY(-2px);
 }
 
-.update-button {
-  background-color: #28a745;
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 4px;
-  cursor: pointer;
+/* Specific styles for the black button */
+.button-27 {
+  background-color: #000;
+  color: #fff;
 }
 
-.update-button:hover {
-  background-color: #218838;
+.button-27:hover {
+  box-shadow: rgba(0, 0, 0, 0.25) 0 5px 10px;
+  transform: translateY(-2px);
 }
+
 
 .summary-container h2 {
   margin-top: 20px;
   color: #333;
+}
+
+.paper-links {
+  display: flex;
+  justify-content: space-between; /* Aligns items to the left and right */
+  margin-top: 20px;
+}
+
+.left-buttons {
+  display: flex;
+  gap: 10px; /* Space between buttons */
+}
+
+.loader {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
