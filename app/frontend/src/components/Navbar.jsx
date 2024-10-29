@@ -13,9 +13,9 @@ export default function Navbar() {
         <img src={Logo} width="100px" alt="Logo" />
       </Link>
       <ul className="navbar--items">
-        <li><Link to="/browse">Browse</Link></li>
-        <li><Link to="/recent">Recent</Link></li>
-        <li><Link to="/submit">Submit</Link></li>
+        <li><Link to="/browse">Browse Papers</Link></li>
+        <li><Link to="/recent">Recent Submissions</Link></li>
+        <li><Link to="/submit">Submit Now</Link></li>
         <li><Link to="/aboutus">About Us</Link></li>
       </ul>
       <div className="navbar--auth">
