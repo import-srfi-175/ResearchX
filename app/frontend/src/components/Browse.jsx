@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import Navbar from '../components/Navbar';
 import { Link } from 'react-router-dom';
+import { Eye } from 'lucide-react'
 import '../styles/Browse.css';
 
 export default function Browse() {
@@ -98,8 +98,8 @@ export default function Browse() {
                   <a
                     href={`http://localhost:8000/${paper.document_url}`}
                     download
-                    className="download-button"
-                  >
+                    className="button-28"
+                  > <Eye />
                     View Paper
                   </a>
                 </div>

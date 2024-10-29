@@ -1,15 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useEffect, useState, useContext } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
-import ReactMarkdown from 'react-markdown'; // Import react-markdown
-import '../styles/PaperDetail.css'; // Import the new CSS file
+import ReactMarkdown from 'react-markdown';
+import '../styles/PaperDetail.css';
+import { AuthContext } from '../contexts/AuthContext'; // Import AuthContext for authentication check
+import { Trash } from 'lucide-react';
 
 const PaperDetail = () => {
-  const { id } = useParams(); // Get the paper ID from the URL
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const { isAuthenticated } = useContext(AuthContext);
   const [paper, setPaper] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [summary, setSummary] = useState(''); // State for the summary
+  const [summary, setSummary] = useState('');
 
   useEffect(() => {
     const fetchPaper = async () => {
@@ -19,7 +23,7 @@ const PaperDetail = () => {
           throw new Error('Failed to fetch paper');
         }
         const data = await response.json();
-        setPaper(data.paper); // Assuming data contains a 'paper' object
+        setPaper(data.paper);
       } catch (error) {
         setError(error.message);
       } finally {
@@ -29,6 +33,25 @@ const PaperDetail = () => {
 
     fetchPaper();
   }, [id]);
+
+  const handleDelete = async () => {
+    if (window.confirm('Are you sure you want to delete this paper?')) {
+      try {
+        const response = await fetch(`http://localhost:8000/delete/${id}`, {
+          method: 'DELETE',
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
+          },
+        });
+        if (!response.ok) {
+          throw new Error('Failed to delete the paper');
+        }
+        navigate('/recent'); // Redirect to recent papers page after deletion
+      } catch (error) {
+        setError(error.message);
+      }
+    }
+  };
 
   const generateSummary = async () => {
     if (!paper || !paper.document_url) {
@@ -43,7 +66,7 @@ const PaperDetail = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          pdf_file: paper.document_url, // Sending the document URL to the endpoint
+          pdf_file: paper.document_url,
         }),
       });
 
@@ -52,7 +75,7 @@ const PaperDetail = () => {
       }
 
       const data = await response.json();
-      setSummary(data.response); // Assuming the response has the summary in 'response'
+      setSummary(data.response);
     } catch (error) {
       setError(error.message);
     }
@@ -60,7 +83,7 @@ const PaperDetail = () => {
 
   if (loading) return <p>Loading paper details...</p>;
   if (error) return <p className="error-message">{error}</p>;
-  
+
   return (
     <div className="paper-detail-page">
       <div className="paper-detail-container">
@@ -79,6 +102,11 @@ const PaperDetail = () => {
               >
                 View Paper
               </a>
+              {isAuthenticated && (
+                <button onClick={handleDelete} className="delete-button">
+                  <Trash size={16} /> Delete
+                </button>
+              )}
             </div>
             <button onClick={generateSummary} className="generate-button">
               Generate Summary
@@ -86,7 +114,7 @@ const PaperDetail = () => {
             {summary && (
               <div className="summary-container">
                 <h2>Summary</h2>
-                <ReactMarkdown>{summary}</ReactMarkdown> {/* Render Markdown content */}
+                <ReactMarkdown>{summary}</ReactMarkdown>
               </div>
             )}
           </div>
