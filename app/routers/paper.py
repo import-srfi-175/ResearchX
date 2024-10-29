@@ -66,15 +66,41 @@ def delete_paper(
     return {"message": "Research paper deleted successfully!"}
 
 @router.put('/modifypaper/{id}', response_class=JSONResponse)
-async def modifyer(id: int,modified_paper = schemas.ResearchPaper, db:Session = Depends(get_db)):
+async def modifyer(
+    id: int,
+    title: str = Form(...),
+    category: str = Form(...),
+    authors: str = Form(...),
+    description: str = Form(...),
+    document: UploadFile = File(None),  # Make document optional
+    db: Session = Depends(get_db)
+):
     paper_query = db.query(models.ResearchPaper).filter(models.ResearchPaper.id == id)
     paper = paper_query.first()
     
-    if paper == None:
-        raise HTTPException(404 , detail = "Paper not found")
-    paper_query.update({**modified_paper.model_dump()}, synchronize_session=False)
+    if paper is None:
+        raise HTTPException(404, detail="Paper not found")
+
+    # Update fields
+    paper.title = title
+    paper.category = category
+    paper.authors = authors
+    paper.description = description
+
+    if document:  # If a new document is uploaded
+        # Save the uploaded file
+        document_filename = document.filename
+        document_path = f"static/{document_filename}"
+        
+        with open(document_path, "wb") as buffer:
+            shutil.copyfileobj(document.file, buffer)
+        
+        paper.document_url = f"static/{document_filename}"
+
     db.commit()
     return {"data": "Successfully modified paper"}
+
+
         
 @router.get('/findpaper')
 async def paper_finder(author: Optional[str] = Query(None),

@@ -10,9 +10,11 @@ import PaperDetail from './components/PaperDetail';
 import BrowseArxiv from './components/SearchNet';
 import Footer from './components/Footer';
 import Hero from './components/Hero';
+import UpdatePaper from './components/UpdatePaper';
 import { AuthProvider } from './contexts/AuthContext'; // Import AuthProvider
 
 import './styles/App.css';
+
 
 function Home() {
   return (
@@ -40,6 +42,7 @@ function App() {
               <Route path="/signin" element={<SignIn />} />
               <Route path="/fetchnet" element={<BrowseArxiv/> }/>
               <Route path="/paper/:id" element={<PaperDetail />} />
+              <Route path="/update-paper/:id" element={<UpdatePaper />} />
             </Routes>
           </div>
           <Footer />

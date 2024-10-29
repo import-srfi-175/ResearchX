@@ -1,10 +1,9 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import Navbar from '../components/Navbar';
 import ReactMarkdown from 'react-markdown';
 import '../styles/PaperDetail.css';
-import { AuthContext } from '../contexts/AuthContext'; // Import AuthContext for authentication check
-import { Trash } from 'lucide-react';
+import { AuthContext } from '../contexts/AuthContext';
+import { Trash, Edit } from 'lucide-react';
 
 const PaperDetail = () => {
   const { id } = useParams();
@@ -18,7 +17,12 @@ const PaperDetail = () => {
   useEffect(() => {
     const fetchPaper = async () => {
       try {
-        const response = await fetch(`http://localhost:8000/paper/${id}`);
+        const response = await fetch(`http://localhost:8000/paper/${id}`, {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
+          },
+        });
+        
         if (!response.ok) {
           throw new Error('Failed to fetch paper');
         }
@@ -46,7 +50,7 @@ const PaperDetail = () => {
         if (!response.ok) {
           throw new Error('Failed to delete the paper');
         }
-        navigate('/recent'); // Redirect to recent papers page after deletion
+        navigate('/recent');
       } catch (error) {
         setError(error.message);
       }
@@ -81,6 +85,10 @@ const PaperDetail = () => {
     }
   };
 
+  const handleUpdate = () => {
+    navigate(`/update-paper/${id}`); // Redirect to update paper page
+  };
+
   if (loading) return <p>Loading paper details...</p>;
   if (error) return <p className="error-message">{error}</p>;
 
@@ -103,9 +111,14 @@ const PaperDetail = () => {
                 View Paper
               </a>
               {isAuthenticated && (
-                <button onClick={handleDelete} className="delete-button">
-                  <Trash size={16} /> Delete
-                </button>
+                <>
+                  <button onClick={handleUpdate} className="update-button">
+                    <Edit size={16} /> Update
+                  </button>
+                  <button onClick={handleDelete} className="delete-button">
+                    <Trash size={16} /> Delete
+                  </button>
+                </>
               )}
             </div>
             <button onClick={generateSummary} className="generate-button">
