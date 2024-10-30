@@ -13,7 +13,8 @@ const PaperDetail = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [summary, setSummary] = useState('');
-  const [isGenerating, setIsGenerating] = useState(false); 
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [citationCount, setCitationCount] = useState(null); // New state for citation count
 
   useEffect(() => {
     const fetchPaper = async () => {
@@ -23,16 +24,40 @@ const PaperDetail = () => {
             'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
           },
         });
-        
+
         if (!response.ok) {
           throw new Error('Failed to fetch paper');
         }
         const data = await response.json();
         setPaper(data.paper);
+
+        // Fetch citation count
+        fetchCitationCount(data.paper);
       } catch (error) {
         setError(error.message);
       } finally {
         setLoading(false);
+      }
+    };
+
+    const fetchCitationCount = async (paper) => {
+      try {
+        const response = await fetch(`http://localhost:8000/citation_counts`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(paper),
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch citation count');
+        }
+
+        const citationData = await response.json();
+        setCitationCount(citationData); // Update citation count
+      } catch (error) {
+        setError(error.message);
       }
     };
 
@@ -64,7 +89,7 @@ const PaperDetail = () => {
       return;
     }
 
-    setIsGenerating(true); // Set loader state to true
+    setIsGenerating(true);
     try {
       const response = await fetch('http://localhost:8000/summarize', {
         method: 'POST',
@@ -85,12 +110,12 @@ const PaperDetail = () => {
     } catch (error) {
       setError(error.message);
     } finally {
-      setIsGenerating(false); // Reset loader state
+      setIsGenerating(false);
     }
   };
 
   const handleUpdate = () => {
-    navigate(`/update-paper/${id}`); // Redirect to update paper page
+    navigate(`/update-paper/${id}`);
   };
 
   if (loading) return <p>Loading paper details...</p>;
@@ -106,6 +131,7 @@ const PaperDetail = () => {
             <p><strong>Authors:</strong> {paper.authors}</p>
             <p><strong>Description:</strong> {paper.description}</p>
             <p><strong>Submitted on:</strong> {new Date(paper.created_at).toLocaleDateString()}</p>
+            <p><strong>Citation Count:</strong> {citationCount !== null ? citationCount : 'Loading...'}</p> {/* Display citation count */}
             <div className="paper-links">
               <div className="left-buttons">
                 <a

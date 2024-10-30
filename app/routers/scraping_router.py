@@ -64,7 +64,7 @@ async def net_fetch(query: Optional[str] = Query(None), max_results: Optional[in
 
     return JSONResponse(content={"query": query, "results": response_data})
 
-@router.get('/citation_counts')
+@router.post('/citation_counts')
 async def citation_count(paper: schemas.ResearchPaper, db:Session = Depends(get_db)):
     db_query = db.query(models.PaperStats).filter(models.PaperStats.paper_id == paper.id).first()
     if db_query != None:
