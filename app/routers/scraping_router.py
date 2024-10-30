@@ -13,3 +13,8 @@ router = APIRouter()
 async def net_fetch(query: Optional[str] = Query(None), num_results: Optional[int] = Query(None)):
     response = scraping_util.fetch_arxiv_papers(query)
     return response
+
+@router.post('/fetch_related')
+async def related_fetch(query: schemas.Fetch):
+    response = scraping_util.fetch_related_papers(query=query.query)
+    return response

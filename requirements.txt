@@ -12,3 +12,4 @@ faiss-cpu
 pypdf2
 beautifulsoup4
 lxml
+google-search-results

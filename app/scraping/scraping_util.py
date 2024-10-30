@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 import time
+from config import settings
 
 def fetch_arxiv_papers(query, max_results=20, delay=3):
     papers = []
@@ -33,7 +34,44 @@ def fetch_arxiv_papers(query, max_results=20, delay=3):
     
     return papers
 
+from serpapi import GoogleSearch
+import json
 
-# query = "artificial intelligence"
-# df = fetch_arxiv_papers(query)
-# print(df.head())
+
+
+def fetch_related_papers(query):
+    query = query+ " site:semanticscholar.org"
+    search = GoogleSearch({
+        "q": query,
+        "location": "United States",
+        "hl": "en",
+        "gl": "us",
+        "api_key": settings.serp_api_key
+    })
+    
+    results = search.get_dict()
+    related_papers = []
+
+    try:
+        if "organic_results" in results:
+            for result in results["organic_results"]:
+                title = result.get("title", "No title available")
+                link = result.get("link", "No link available")
+                snippet = result.get("snippet", "No snippet available")
+                
+                related_papers.append({
+                    "title": title,
+                    "url": link,
+                    "snippet": snippet
+                })
+    except Exception as e:
+        print(f"An error occurred: {e}")
+
+    # Return results in JSON format
+    return json.dumps(related_papers, indent=4)
+
+# Example usage
+# query = "Attention is all you need site:semanticscholar.org"
+# query = "Attention is all you need"
+# related_papers_json = fetch_related_papers(query)
+# print(related_papers_json)

@@ -10,6 +10,7 @@ class Settings(BaseSettings):
     secret_key: str
     algorithm: str
     gemini_api_key:str
+    serp_api_key:str
     access_token_expire_minutes: int
 
     class Config:
