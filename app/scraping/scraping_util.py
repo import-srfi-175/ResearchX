@@ -1,8 +1,11 @@
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
+import urllib
 import time
 from config import settings
+from serpapi import GoogleSearch
+import json
 
 def fetch_arxiv_papers(query, max_results=20, delay=3):
     papers = []
@@ -31,13 +34,37 @@ def fetch_arxiv_papers(query, max_results=20, delay=3):
         
 
         time.sleep(delay)
-    
     return papers
 
-from serpapi import GoogleSearch
-import json
 
 
+def get_google_scholar_citations(title):
+    """Fetch citation count from Google Scholar."""
+    # Search for the paper on Google Scholar
+    query = urllib.parse.quote(title)
+    search_url = f"https://scholar.google.com/scholar?q={query}"
+
+    # Send a request to Google Scholar
+    response = requests.get(search_url)
+
+    # Check if the request was successful
+    if response.status_code != 200:
+        print("Failed to retrieve data from Google Scholar.")
+        return 0
+
+    # Parse the HTML response
+    soup = BeautifulSoup(response.text, 'html.parser')
+    
+    # Look for citation counts in the search results
+    citation_count = 0
+    for result in soup.find_all('div', class_='gs_ri'):
+        citation_info = result.find('div', class_='gs_fl').find_all('a')
+        for info in citation_info:
+            if 'Cited by' in info.text:
+                citation_count = int(info.text.split(' ')[-1])  # Extract the number
+                return citation_count
+    
+    return citation_count
 
 def fetch_related_papers(query):
     query = query+ " site:semanticscholar.org"
@@ -73,5 +100,6 @@ def fetch_related_papers(query):
 # Example usage
 # query = "Attention is all you need site:semanticscholar.org"
 # query = "Attention is all you need"
+# print(get_google_scholar_citations(query))
 # related_papers_json = fetch_related_papers(query)
 # print(related_papers_json)
