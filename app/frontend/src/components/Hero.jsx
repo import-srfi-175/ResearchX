@@ -1,5 +1,5 @@
 // Hero.jsx
-import { Search, BookOpen, Users } from "lucide-react";
+import { Search, BookOpen, Stars, ThumbsUp, Users } from "lucide-react";
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Hero.css';
@@ -109,6 +109,16 @@ export default function HeroSection() {
             <BookOpen size={50}/>
             <h3>Easy Submission</h3>
             <p>Streamlined process for submitting and publishing your research papers.</p>
+          </div>
+          <div className="feature-item">
+            <ThumbsUp size={50}/>
+            <h3>Paper Recommendations</h3>
+            <p>Get tailored research suggestions based on your interests and past searches.</p>
+          </div>
+          <div className="feature-item">
+            <Stars size={50}/>
+            <h3>Interactive Paper Summaries and Q&A</h3>
+            <p>Generate concise summaries of research papers and interact with an AI chatbot to ask specific questions about the content.</p>
           </div>
         </div>
       </div>
