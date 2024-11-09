@@ -30,7 +30,7 @@ export default function HeroSection() {
     setLastBrowsedSubject(subject || '');
 
     if (subject) {
-      fetch(`http://localhost:8000/findpaper?category=${subject}`)
+      fetch(`https://researchx.onrender.com/findpaper?category=${subject}`)
         .then(response => response.json())
         .then(data => setRecentSubjectPapers(data.papers || []))
         .catch(console.error);

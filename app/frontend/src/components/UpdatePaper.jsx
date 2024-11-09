@@ -21,7 +21,7 @@ export default function UpdatePaper() {
 
   useEffect(() => {
     const fetchPaper = async () => {
-      const response = await fetch(`http://localhost:8000/paper/${id}`, {
+      const response = await fetch(`https://researchx.onrender.com/paper/${id}`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
         },
@@ -71,7 +71,7 @@ export default function UpdatePaper() {
     try {
       const authToken = localStorage.getItem('authToken');
   
-      const response = await fetch(`http://localhost:8000/modifypaper/${id}`, {
+      const response = await fetch(`https://researchx.onrender.com/modifypaper/${id}`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${authToken}`,

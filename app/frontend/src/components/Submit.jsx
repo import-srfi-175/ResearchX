@@ -43,7 +43,7 @@ export default function Submit() {
     try {
       const authToken = localStorage.getItem('authToken');
 
-      const response = await fetch('http://localhost:8000/submit', {
+      const response = await fetch('https://researchx.onrender.com/submit', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${authToken}`,

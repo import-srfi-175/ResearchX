@@ -19,7 +19,7 @@ const PaperDetail = () => {
   useEffect(() => {
     const fetchPaper = async () => {
       try {
-        const response = await fetch(`http://localhost:8000/paper/${id}`, {
+        const response = await fetch(`https://researchx.onrender.com/paper/${id}`, {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
           },
@@ -42,7 +42,7 @@ const PaperDetail = () => {
 
     const fetchCitationCount = async (paper) => {
       try {
-        const response = await fetch(`http://localhost:8000/citation_counts`, {
+        const response = await fetch(`https://researchx.onrender.com/citation_counts`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -67,7 +67,7 @@ const PaperDetail = () => {
   const handleDelete = async () => {
     if (window.confirm('Are you sure you want to delete this paper?')) {
       try {
-        const response = await fetch(`http://localhost:8000/delete/${id}`, {
+        const response = await fetch(`https://researchx.onrender.com/delete/${id}`, {
           method: 'DELETE',
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
@@ -91,7 +91,7 @@ const PaperDetail = () => {
 
     setIsGenerating(true);
     try {
-      const response = await fetch('http://localhost:8000/summarize', {
+      const response = await fetch('https://researchx.onrender.com/summarize', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -135,7 +135,7 @@ const PaperDetail = () => {
             <div className="paper-links">
               <div className="left-buttons">
                 <a
-                  href={`http://localhost:8000/${paper.document_url}`}
+                  href={`https://researchx.onrender.com/${paper.document_url}`}
                   download
                   className="button-28"
                 >
@@ -166,7 +166,7 @@ const PaperDetail = () => {
             )}
             <p className="help-text">
               Need help understanding this stuff? 
-              <a href={`/pdfchat?pdfUrl=http://localhost:8000/${paper.document_url}`}> Ask questions here!</a>
+              <a href={`/pdfchat?pdfUrl=https://researchx.onrender.com/${paper.document_url}`}> Ask questions here!</a>
             </p>
           </div>
         )}

@@ -21,7 +21,7 @@ const PDFChat = () => {
 
       // Sending the user message and PDF URL to the backend
       try {
-        const response = await fetch('http://localhost:8000/generate', {
+        const response = await fetch('https://researchx.onrender.com/generate', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

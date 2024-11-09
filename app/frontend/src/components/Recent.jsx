@@ -11,7 +11,7 @@ export default function Recent() {
   useEffect(() => {
     const fetchPapers = async () => {
       try {
-        const response = await fetch('http://localhost:8000/recent'); // Ensure this endpoint returns paper data
+        const response = await fetch('https://researchx.onrender.com/recent'); // Ensure this endpoint returns paper data
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -42,7 +42,7 @@ export default function Recent() {
             <p><strong>Authors:</strong> {paper.authors}</p>
             <p><strong>Abstract:</strong> {paper.description}</p>
             <div className="paper-links">
-              <a href={`http://localhost:8000/${paper.document_url}`} download className="button-28">
+              <a href={`https://researchx.onrender.com/${paper.document_url}`} download className="button-28">
                 <Eye /> View Paper
               </a>
             </div>

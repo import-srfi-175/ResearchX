@@ -21,7 +21,7 @@ export default function Browse() {
       if (title) query.append('title', title);
       if (category && category !== '') query.append('category', category);
 
-      const response = await fetch(`http://localhost:8000/findpaper?${query.toString()}`);
+      const response = await fetch(`https://researchx.onrender.com/findpaper?${query.toString()}`);
       if (!response.ok) {
         throw new Error('Failed to fetch papers');
       }
@@ -96,7 +96,7 @@ export default function Browse() {
                 <p>{paper.description}</p>
                 <div className="paper-links">
                   <a
-                    href={`http://localhost:8000/${paper.document_url}`}
+                    href={`https://researchx.onrender.com/${paper.document_url}`}
                     download
                     className="button-28"
                   > <Eye />

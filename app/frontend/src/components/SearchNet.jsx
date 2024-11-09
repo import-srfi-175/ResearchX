@@ -15,7 +15,7 @@ export default function BrowseArxiv() {
     setError(null);
 
     try {
-      const response = await fetch(`http://localhost:8000/fetch_internet?query=${searchQuery}`);
+      const response = await fetch(`https://researchx.onrender.com/fetch_internet?query=${searchQuery}`);
       if (!response.ok) {
         throw new Error('Failed to fetch papers');
       }

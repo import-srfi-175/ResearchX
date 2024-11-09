@@ -32,7 +32,7 @@ function SignUp() {
     const dataToSend = { name, ...rest };
 
     try {
-      const response = await fetch('http://localhost:8000/createuser', {
+      const response = await fetch('https://researchx.onrender.com/createuser', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(dataToSend),
