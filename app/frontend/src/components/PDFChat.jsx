@@ -6,7 +6,7 @@ import '../styles/PDFChat.css';
 const PDFChat = () => {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
-  const pdfUrl = params.get('pdfUrl');
+  const pdfUrl = decodeURIComponent(params.get('pdfUrl'));
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
