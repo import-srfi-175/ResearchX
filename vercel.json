@@ -1,0 +1,13 @@
+{
+    "rewrites": [
+      {
+        "source": "/pdfchat",
+        "destination": "/pdfchat/index.html"
+      },
+      {
+        "source": "/pdfchat/:pdfUrl",
+        "destination": "/pdfchat"
+      }
+    ]
+  }
+  
