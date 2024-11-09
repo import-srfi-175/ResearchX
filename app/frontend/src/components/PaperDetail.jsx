@@ -166,7 +166,9 @@ const PaperDetail = () => {
             )}
             <p className="help-text">
               Need help understanding this stuff? 
-              <a href={`/pdfchat?pdfUrl=https://researchx.onrender.com/${paper.document_url}`}> Ask questions here!</a>
+              <a href={`/pdfchat?pdfUrl=${encodeURIComponent(`https://researchx.onrender.com/${paper.document_url}`)}`}>
+                Ask questions here!
+              </a>
             </p>
           </div>
         )}
