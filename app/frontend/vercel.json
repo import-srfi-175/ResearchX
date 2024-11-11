@@ -1,13 +1,12 @@
 {
-    "rewrites": [
-      {
-        "source": "/pdfchat",
-        "destination": "/pdfchat/index.html"
-      },
-      {
-        "source": "/pdfchat/:pdfUrl",
-        "destination": "/pdfchat"
-      }
-    ]
-  }
-  
+  "rewrites": [
+    {
+      "source": "/pdfchat",
+      "destination": "/pdfchat/index.html"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/"
+    }
+  ]
+}
